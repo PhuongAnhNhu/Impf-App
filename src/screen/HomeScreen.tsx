@@ -1,13 +1,14 @@
 import React from 'react';
 import { Table } from 'react-bootstrap';
 import appointments from '../dummydata/appointments';
+import moment from 'moment';
 
 const HomeScreen = () => {
     return (
-        <div>
+        <div className="mt-3">
             {/* Anzeige nur Termin für einen Tag */}
-            <h1>Termin von heute:</h1>
-            <Table striped bordered hover>
+            <h3>Termin von heute:</h3>
+            <Table className="mt-3" striped bordered hover>
                 <thead>
                     <th></th>
                     <th className="text-center">Versicherungsnummer</th>
@@ -25,8 +26,8 @@ const HomeScreen = () => {
                                 <td>{appointment.versicherungsnummer}</td>
                                 <td>{appointment.nachname}</td>
                                 <td>{appointment.vorname}</td>
-                                <td>{appointment.datum}</td>
-                                <td>{appointment.datum}</td>
+                                <td>{moment.unix(Number(appointment.datum)).format("DD-MM-YYYY")}</td>
+                                <td>{moment.unix(Number(appointment.datum)).format("HH:mm")}</td>
                                 <td>{appointment.arzt}</td>
                             </tr>
                         );
