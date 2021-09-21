@@ -11,9 +11,11 @@ import ListAppointments from "./screen/ListAppointments";
 import ListPatients from "./screen/ListPatients";
 import ListImpfstoffe from "./screen/ListImpfstoffe";
 import ListUsers from "./screen/ListUsers";
+import Navigation from "./component/Navigation";
 function App() {
   return (
     <div className="App">
+      <Navigation />
       <Router>
         <Route path="/login" component={LoginScreen} />
         <Route path="/" component={HomeScreen} exact/>
