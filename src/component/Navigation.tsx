@@ -1,5 +1,5 @@
 import React from "react";
-import { Nav, Navbar, NavDropdown } from "react-bootstrap";
+import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import user from "../dummydata/user";
 
 const Navigation = () => {
@@ -10,7 +10,8 @@ const Navigation = () => {
 
   return (
     <div>
-      <Navbar className="p-2 p-md-3 p-lg-4" bg="light" variant="light">
+      <Navbar bg="light" variant="light">
+        <Container>
         <Nav.Link href="/">
           <Navbar.Brand>Impf App</Navbar.Brand>
         </Nav.Link>
@@ -18,12 +19,14 @@ const Navigation = () => {
         <Nav.Link href="/newpatient">Neuer Patient</Nav.Link>
         <Nav.Link href="/impfstoff">Impfstoff anlegen</Nav.Link>
         {user ? (
-          <NavDropdown title={user.name} id="username">
+      
+          <NavDropdown className="justify-content-end" title={user.name} id="username">
             <Nav.Link href="/profile">
               <NavDropdown.Item>Profile</NavDropdown.Item>
             </Nav.Link>
             <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
           </NavDropdown>
+    
         ) : (
           <Nav.Link href="/login">
             <Nav.Link>
@@ -34,6 +37,7 @@ const Navigation = () => {
 
         {/* TODO: Nur für Admin */}
         {/* <Nav.Link href="/admin/newuser">Neuer Benutzer</Nav.Link> */}
+        </Container>
       </Navbar>
     </div>
   );
