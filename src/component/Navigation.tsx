@@ -1,46 +1,66 @@
-import React from "react";
-import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import user from "../dummydata/user";
+import React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Box from '@mui/material/Box';
+import DropDown from '../component/DropDown';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import user from '../dummydata/user';
+import MenuItem from '@mui/material/MenuItem';
 
 const Navigation = () => {
-  const logoutHandler = () => {
-    // dispatch(logout());
-    console.log("logout");
-  };
+    const logoutHandler = () => {
+        // dispatch(logout());
+        console.log('logout');
+    };
 
-  return (
-    <div>
-      <Navbar bg="light" variant="light">
-        <Container>
-        <Nav.Link href="/">
-          <Navbar.Brand>Impf App</Navbar.Brand>
-        </Nav.Link>
-        <Nav.Link href="/appointment">Neuer Termin</Nav.Link>
-        <Nav.Link href="/newpatient">Neuer Patient</Nav.Link>
-        <Nav.Link href="/impfstoff">Impfstoff anlegen</Nav.Link>
-        {user ? (
-      
-          <NavDropdown className="justify-content-end" title={user.name} id="username">
-            <Nav.Link href="/profile">
-              <NavDropdown.Item>Profile</NavDropdown.Item>
-            </Nav.Link>
-            <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-          </NavDropdown>
-    
-        ) : (
-          <Nav.Link href="/login">
-            <Nav.Link>
-              <i className="fas fa-user"></i> Sign in
-            </Nav.Link>
-          </Nav.Link>
-        )}
-
-        {/* TODO: Nur für Admin */}
-        {/* <Nav.Link href="/admin/newuser">Neuer Benutzer</Nav.Link> */}
-        </Container>
-      </Navbar>
-    </div>
-  );
+    return (
+        <Box mb={10}>
+            <AppBar color="inherit">
+                <Toolbar>
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Button color="inherit">
+                            <Link href="/" color="inherit" underline="none">
+                                Impf App
+                            </Link>
+                        </Button>
+                        <Button color="inherit">
+                            <Link href="/appointment" color="inherit" underline="none">
+                                Neuer Termin
+                            </Link>
+                        </Button>
+                        <Button color="inherit">
+                            <Link href="/newpatient" color="inherit" underline="none">
+                                Neuer Patient
+                            </Link>
+                        </Button>
+                        <Button color="inherit">
+                            <Link href="/impfstoff" color="inherit" underline="none">
+                                Impfstoff
+                            </Link>
+                        </Button>
+                        {/* TODO: Nur für Admin */}
+                        {/* <Nav.Link href="/admin/newuser">Neuer Benutzer</Nav.Link> */}
+                        {/* </Container>
+                        </Navbar> */}
+                    </Box>
+                    <Box>
+                        {user.login ? (
+                            <DropDown name={user.name}>
+                                <MenuItem onClick={logoutHandler}>Logout</MenuItem>
+                            </DropDown>
+                        ) : (
+                            <Button color="inherit">
+                                <Link href="/login" color="inherit" underline="none">
+                                    Login
+                                </Link>
+                            </Button>
+                        )}
+                    </Box>
+                </Toolbar>
+            </AppBar>
+            </Box>
+    );
 };
 
 export default Navigation;

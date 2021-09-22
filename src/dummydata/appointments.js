@@ -6,7 +6,7 @@ const appointments =
            versicherungsnummer: "abc123456",
            vorname: "Müller",
            nachname: "Max",
-           datum: "1632211500",
+           datum: "1632294522",
            arzt: "Dr. Maximini"
        },
        {
@@ -24,7 +24,7 @@ const appointments =
            versicherungsnummer: "abc123457",
            vorname: "Müster",
            nachname: "Tim",
-           datum: "1632215100",
+           datum: "1632294522",
            arzt: "Dr. Maximini"
        },
        {
@@ -51,7 +51,7 @@ const appointments =
            versicherungsnummer: "abc123458",
            vorname: "Puth",
            nachname: "Min",
-           datum: "1639236000",
+           datum: "1632294522",
            arzt: "Dr. Maximini"
        },
 
