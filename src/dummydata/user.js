@@ -4,7 +4,7 @@ const user =
         email: 'trang@example.com',
         password: 123456,
         userId: "anna1",
-        login:true,
+        login:false,
     }
 
 export default user;
