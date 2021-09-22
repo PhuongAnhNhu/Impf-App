@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table } from 'react-bootstrap';
 import appointments from '../dummydata/appointments';
 import moment from 'moment';
+import { Box, Checkbox, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody } from '@mui/material';
 
 const HomeScreen = () => {
     let today = moment.unix(Date.now() / 1000).format('DD-MM-YYYY');
@@ -9,46 +9,43 @@ const HomeScreen = () => {
     let data = appointments.map((appointment, index) => {
         // Anzeige nur Termin für heute
         return (
-            today ===
-                moment.unix(Number(appointment.datum)).format('DD-MM-YYYY') && (
-                <tr key={appointment.impfterminId}>
-                    <td>{index + 1}</td>
-                    <td>{appointment.versicherungsnummer}</td>
-                    <td>{appointment.nachname}</td>
-                    <td>{appointment.vorname}</td>
-                    <td>
-                        {moment
-                            .unix(Number(appointment.datum))
-                            .format('DD-MM-YYYY')}
-                    </td>
-                    <td>
-                        {moment.unix(Number(appointment.datum)).format('HH:mm')}
-                    </td>
-                    <td>{appointment.arzt}</td>
-                </tr>
+            today === moment.unix(Number(appointment.datum)).format('DD-MM-YYYY') && (
+                <TableRow key={appointment.impfterminId}>
+                    {/* TODO: index */}
+                    <TableCell>
+                                <Checkbox></Checkbox>
+                            </TableCell>
+                    <TableCell>{appointment.nachname}</TableCell>
+                    <TableCell>{appointment.vorname}</TableCell>
+                    <TableCell>{appointment.versicherungsnummer}</TableCell>
+                    <TableCell>{moment.unix(Number(appointment.datum)).format('DD-MM-YYYY')}</TableCell>
+                    <TableCell>{moment.unix(Number(appointment.datum)).format('HH:mm')}</TableCell>
+                    <TableCell>{appointment.arzt}</TableCell>
+                </TableRow>
             )
         );
     });
 
-
     return (
-        <div className="mt-3">
-            {/* Anzeige nur Termin für einen Tag */}
-            <h3>Termin von heute:</h3>
-            <Table className="mt-3" striped bordered hover>
-                <thead>
-                    <th></th>
-                    <th className="text-center">Versicherungsnummer</th>
-                    <th className="text-center">Name</th>
-                    <th className="text-center">Vorname</th>
-                    <th className="text-center">Datum</th>
-                    <th className="text-center">Uhrzeit</th>
-                    <th className="text-center">Artz</th>
-                </thead>
-                <tbody>{data}</tbody>
-            </Table>
-            <h1>Anzahl des Impfstoff: </h1>
-        </div>
+        <Box>
+            <h1>Homepage</h1>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Anwesenheit</TableCell>
+                            <TableCell>Vorname</TableCell>
+                            <TableCell>Nachname</TableCell>
+                            <TableCell>Verischerungsnummer</TableCell>
+                            <TableCell>Datum</TableCell>
+                            <TableCell>Uhrzeit</TableCell>
+                            <TableCell>Arzt</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>{data}</TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     );
 };
 

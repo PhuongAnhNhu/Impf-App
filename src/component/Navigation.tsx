@@ -15,6 +15,7 @@ const Navigation = () => {
     };
 
     return (
+        <Box mb={10}>
             <AppBar color="inherit">
                 <Toolbar>
                     <Box sx={{ flexGrow: 1 }}>
@@ -58,6 +59,7 @@ const Navigation = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
+            </Box>
     );
 };
 
