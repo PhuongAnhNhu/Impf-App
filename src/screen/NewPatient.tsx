@@ -1,5 +1,5 @@
-import React from 'react'
-import { Box, FormControl, FormLabel, Input, InputLabel, Button, Autocomplete } from '@mui/material';
+import React from 'react';
+import { Box, FormControl, FormLabel, Input, InputLabel, Button } from '@mui/material';
 
 const NewPatient = () => {
     return (
@@ -9,9 +9,6 @@ const NewPatient = () => {
                 <FormControl>
                     <InputLabel htmlFor="Vorname">Vorname</InputLabel>
                     <Input id="Vorname" aria-describedby="my-helper-text" />
-                </FormControl>
-
-                <FormControl>
                 </FormControl>
                 <FormControl>
                     <InputLabel htmlFor="Nachname">Nachname</InputLabel>
@@ -46,7 +43,7 @@ const NewPatient = () => {
                 </Button>
             </FormControl>
         </Box>
-    )
-}
+    );
+};
 
-export default NewPatient
+export default NewPatient;
