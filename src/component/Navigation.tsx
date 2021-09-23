@@ -44,10 +44,15 @@ const Navigation = () => {
                             Impfstoff
                             </Link>
                         </Button>
-                        {/* TODO: Nur für Admin */}
-                        {/* <Nav.Link href="/admin/newuser">Neuer Benutzer</Nav.Link> */}
-                        {/* </Container>
-                        </Navbar> */}
+
+                        {user.login && user.admin && (
+                             <Button color="inherit">
+                             <Link href="/listusers" color="inherit" underline="none">
+                             Userlist
+                             </Link>
+                         </Button>
+                        )}
+                    
                     </Box>
                     <Box>
                         {user.login ? (
