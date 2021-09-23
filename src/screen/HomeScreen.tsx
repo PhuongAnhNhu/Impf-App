@@ -27,7 +27,7 @@ const HomeScreen = () => {
     });
 
     return (
-        <Box>
+        <Box mr={2}>
             <h1>Homepage</h1>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
