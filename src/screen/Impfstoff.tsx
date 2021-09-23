@@ -44,7 +44,10 @@ const Impfstopff = () => {
                         />
                     </LocalizationProvider>
                 </FormControl>
-
+                <FormControl>
+                    <InputLabel htmlFor="Vorname">Menge</InputLabel>
+                    <Input sx={{ width: '25rem' }} id="Vorname" aria-describedby="my-helper-text" />
+                </FormControl>
                 <Button sx={{ marginTop: '2rem' }} variant="outlined">
                     Speichern
                 </Button>

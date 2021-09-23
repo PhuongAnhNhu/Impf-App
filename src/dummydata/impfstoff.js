@@ -1,0 +1,73 @@
+const impfstoffs = [
+    {
+        id: 1,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 2,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 3,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 4,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 5,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 6,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 7,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 8,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 9,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+    {
+        id: 10,
+        bezeichnung: 'biontech',
+        hersteller: '1632385297',
+        dosierung: '10ml',
+        zulassungsdatum: '1632385297',
+    },
+];
+export default impfstoffs;

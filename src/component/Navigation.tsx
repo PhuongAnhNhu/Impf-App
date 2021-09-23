@@ -35,13 +35,13 @@ const Navigation = () => {
                             </Link>
                         </Button>
                         <Button color="inherit">
-                            <Link href="/impfstoff" color="inherit" underline="none">
-                                Impfstoff
+                            <Link href="/listappointments" color="inherit" underline="none">
+                            Terminliste
                             </Link>
                         </Button>
                         <Button color="inherit">
-                            <Link href="/listappointments" color="inherit" underline="none">
-                            Terminliste
+                            <Link href="/listimpfstoffe" color="inherit" underline="none">
+                            Impfstoff
                             </Link>
                         </Button>
                         {/* TODO: Nur für Admin */}
