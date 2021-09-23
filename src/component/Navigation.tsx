@@ -39,6 +39,11 @@ const Navigation = () => {
                                 Impfstoff
                             </Link>
                         </Button>
+                        <Button color="inherit">
+                            <Link href="/listappointments" color="inherit" underline="none">
+                            Terminliste
+                            </Link>
+                        </Button>
                         {/* TODO: Nur für Admin */}
                         {/* <Nav.Link href="/admin/newuser">Neuer Benutzer</Nav.Link> */}
                         {/* </Container>
