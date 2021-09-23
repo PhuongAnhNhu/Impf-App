@@ -27,7 +27,6 @@ function App() {
         <Route path="/listpatients" component={ListPatients}/>
         <Route path="/listimpfstoffe" component={ListImpfstoffe}/>
         <Route path="/listusers" component={ListUsers}/>
-      
       </Router>
     </div>
   );
