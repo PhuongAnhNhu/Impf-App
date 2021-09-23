@@ -1,12 +1,7 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Box from '@mui/material/Box';
-import DropDown from '../component/DropDown';
-import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import user from '../dummydata/user';
-import MenuItem from '@mui/material/MenuItem';
+import DropDown from '../component/DropDown'
+import { AppBar, Toolbar, Box, Button, Link, MenuItem } from '@mui/material';
 
 const Navigation = () => {
     const logoutHandler = () => {
@@ -21,7 +16,7 @@ const Navigation = () => {
                     <Box sx={{ flexGrow: 1 }}>
                         <Button color="inherit">
                             <Link href="/" color="inherit" underline="none">
-                                Impf App
+                                <img src="/logo.png" width="50" alt="logo"></img>
                             </Link>
                         </Button>
                         <Button color="inherit">
@@ -33,26 +28,31 @@ const Navigation = () => {
                             <Link href="/newpatient" color="inherit" underline="none">
                                 Neuer Patient
                             </Link>
-                        </Button>
+                            </Button>
+                            <Button color="inherit">
+                                <Link href="/listpatients" color="inherit" underline="none">
+                                    Patientsliste
+                                </Link>
+                            </Button>
+                       
                         <Button color="inherit">
                             <Link href="/listappointments" color="inherit" underline="none">
-                            Terminliste
+                                Terminliste
                             </Link>
                         </Button>
                         <Button color="inherit">
                             <Link href="/listimpfstoffe" color="inherit" underline="none">
-                            Impfstoff
+                                Impfstoff
                             </Link>
                         </Button>
 
                         {user.login && user.admin && (
-                             <Button color="inherit">
-                             <Link href="/listusers" color="inherit" underline="none">
-                             Userlist
-                             </Link>
-                         </Button>
+                            <Button color="inherit">
+                                <Link href="/listusers" color="inherit" underline="none">
+                                    Userlist
+                                </Link>
+                            </Button>
                         )}
-                    
                     </Box>
                     <Box>
                         {user.login ? (
@@ -69,7 +69,7 @@ const Navigation = () => {
                     </Box>
                 </Toolbar>
             </AppBar>
-            </Box>
+        </Box>
     );
 };
 

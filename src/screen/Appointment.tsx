@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, FormControl, FormLabel, Input, InputLabel, Button } from '@mui/material';
-import patients from '../dummydata/patients';
+
 
 const Appointment = () => {
     return (
