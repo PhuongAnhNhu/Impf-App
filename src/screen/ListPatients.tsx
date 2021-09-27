@@ -4,7 +4,7 @@ import patients from '../dummydata/patients';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ListPatients = () => {
+const ListPatients = ({vorname, nachname, versicherungsnummer, kvNummer, geschlecht,geburtsdatum, strasse,plz,ort}: ListPatientsProps) => {
     let data = patients.map((patient, index) => {
         return (
             <TableRow hover key={patient.versicherungsnummer}>

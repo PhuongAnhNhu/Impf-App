@@ -1,9 +1,9 @@
 import React from 'react';
 import appointments from '../dummydata/appointments';
 import moment from 'moment';
-import {Box,Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody } from '@mui/material';
+import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody } from '@mui/material';
 
-const ListAppointment = () => {
+const ListAppointment = ({ vorname, nachname, versicherungsnummer, datum, artz }: ListAppointmentsProps) => {
     let data = appointments.map((appointment, index) => {
         return (
             <TableRow hover key={appointment.impfterminId}>
@@ -20,23 +20,23 @@ const ListAppointment = () => {
 
     return (
         <Box mr={2}>
-        <h2>Terminliste</h2>
-        <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell></TableCell>
-                        <TableCell>Vorname</TableCell>
-                        <TableCell>Nachname</TableCell>
-                        <TableCell>Verischerungsnummer</TableCell>
-                        <TableCell>Datum</TableCell>
-                        <TableCell>Uhrzeit</TableCell>
-                        <TableCell>Arzt</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>{data}</TableBody>
-            </Table>
-        </TableContainer>
+            <h2>Terminliste</h2>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell></TableCell>
+                            <TableCell>Vorname</TableCell>
+                            <TableCell>Nachname</TableCell>
+                            <TableCell>Verischerungsnummer</TableCell>
+                            <TableCell>Datum</TableCell>
+                            <TableCell>Uhrzeit</TableCell>
+                            <TableCell>Arzt</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>{data}</TableBody>
+                </Table>
+            </TableContainer>
         </Box>
     );
 };

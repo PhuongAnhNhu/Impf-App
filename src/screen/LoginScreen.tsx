@@ -2,10 +2,6 @@ import React from 'react';
 import { Box, FormControl, InputLabel, Input, InputAdornment, Button } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
-export interface LoginScreenProps {
-    username?: string;
-    password: string;
-}
 
 const LoginScreen = ({ username, password }: LoginScreenProps) => {
     return (

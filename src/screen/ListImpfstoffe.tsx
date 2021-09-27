@@ -1,10 +1,11 @@
 import React from 'react';
 import moment from 'moment';
+import {Link} from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
-import { Box, Link, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button } from '@mui/material';
+import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button } from '@mui/material';
 import impfstoffs from '../dummydata/impfstoff';
 
-const ListImpfstoffe = () => {
+const ListImpfstoffe = ({ id, bezeichnung, dosierung, hersteller, zulassungsdatum }: ImpfstoffeProps) => {
     let data = impfstoffs.map((impfstoff, index) => {
         return (
             <TableRow hover key={impfstoff.id}>
@@ -20,8 +21,8 @@ const ListImpfstoffe = () => {
         <div>
             <Box mr={2}>
                 <h2>Impfstoffe</h2>
-                <Link href="/impfstoff" color="inherit" underline="none">
-                    <Button sx={{marginBottom: '1rem'}} variant="outlined">
+                <Link to="/impfstoff" >
+                    <Button sx={{ marginBottom: '1rem' }} variant="outlined">
                         <AddIcon /> Impfstoffe eintragen
                     </Button>
                 </Link>
