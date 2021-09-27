@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import LoginScreen from "./screen/LoginScreen";
 import HomeScreen from "./screen/HomeScreen";
 import NewUser from "./screen/NewUser";
@@ -15,8 +15,9 @@ import Navigation from "./component/Navigation";
 function App() {
   return (
     <div className="App">
+      <BrowserRouter>
       <Navigation />
-      <Router>
+        
         <Route path="/login" component={LoginScreen} />
         <Route path="/" component={HomeScreen} exact/>
         <Route path="/newuser" component={NewUser}/>
@@ -27,7 +28,8 @@ function App() {
         <Route path="/listpatients" component={ListPatients}/>
         <Route path="/listimpfstoffe" component={ListImpfstoffe}/>
         <Route path="/listusers" component={ListUsers}/>
-      </Router>
+        
+      </BrowserRouter>
     </div>
   );
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import user from '../dummydata/user';
 import DropDown from '../component/DropDown'
-import { AppBar, Toolbar, Box, Button, Link, MenuItem } from '@mui/material';
+import { AppBar, Toolbar, Box, Button, MenuItem } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const Navigation = () => {
     const logoutHandler = () => {
@@ -15,40 +16,40 @@ const Navigation = () => {
                 <Toolbar>
                     <Box sx={{ flexGrow: 1 }}>
                         <Button color="inherit">
-                            <Link href="/" color="inherit" underline="none">
+                            <Link to="/">
                                 <img src="/logo.png" width="50" alt="logo"></img>
                             </Link>
                         </Button>
                         <Button color="inherit">
-                            <Link href="/appointment" color="inherit" underline="none">
+                            <Link style={{ textDecoration: 'none' }} to="/appointment">
                                 Neuer Termin
                             </Link>
                         </Button>
                         <Button color="inherit">
-                            <Link href="/newpatient" color="inherit" underline="none">
+                            <Link to="/newpatient">
                                 Neuer Patient
                             </Link>
                             </Button>
                             <Button color="inherit">
-                                <Link href="/listpatients" color="inherit" underline="none">
+                                <Link to="/listpatients">
                                     Patientsliste
                                 </Link>
                             </Button>
                        
                         <Button color="inherit">
-                            <Link href="/listappointments" color="inherit" underline="none">
+                            <Link to="/listappointments">
                                 Terminliste
                             </Link>
                         </Button>
                         <Button color="inherit">
-                            <Link href="/listimpfstoffe" color="inherit" underline="none">
+                            <Link to="/listimpfstoffe">
                                 Impfstoff
                             </Link>
                         </Button>
 
                         {user.login && user.admin && (
                             <Button color="inherit">
-                                <Link href="/listusers" color="inherit" underline="none">
+                                <Link to="/listusers">
                                     Userlist
                                 </Link>
                             </Button>
@@ -61,10 +62,10 @@ const Navigation = () => {
                             </DropDown>
                         ) : (
                             <Button color="inherit">
-                                <Link href="/login" color="inherit" underline="none">
+                                <Link to="/login">
                                     Login
                                 </Link>
-                            </Button>
+                            </Button> 
                         )}
                     </Box>
                 </Toolbar>
