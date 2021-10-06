@@ -11,7 +11,7 @@ const LoginScreen = ({ username, password }: LoginScreenProps) => {
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} mt={30}>
             <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                <FormControl variant="standard">
+                <FormControl fullWidth variant="standard">
                     <InputLabel htmlFor="input-with-icon-adornment">Username</InputLabel>
                     <Input
                         id="input-with-icon-adornment"
@@ -22,9 +22,8 @@ const LoginScreen = ({ username, password }: LoginScreenProps) => {
                         }
                     />
                 </FormControl>
-            </Box>
-            <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                <FormControl variant="standard">
+
+                <FormControl fullWidth variant="standard">
                     <InputLabel htmlFor="input-with-icon-adornment">Password</InputLabel>
                     <Input
                         id="input-with-icon-adornment"
