@@ -1,6 +1,6 @@
 import React from 'react';
 import user from '../dummydata/user';
-import DropDown from '../component/DropDown'
+import DropDown from './DropDown'
 import { AppBar, Toolbar, Box, Button, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
 
