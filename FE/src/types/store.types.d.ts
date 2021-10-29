@@ -29,3 +29,7 @@ interface UserListResponse {
     success: boolean;
     collection: User[];
 }
+
+interface DeleteUserPayload {
+    id:number;
+}

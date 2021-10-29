@@ -31,6 +31,12 @@ export const postUser = createAsyncThunk('users/postUser', async (payload: PostU
     return response.data.collection;
 });
 
+//DELETE USER : 
+export const deleteUser = createAsyncThunk('users/deleteUser', async (payload: DeleteUserPayload, thunkAPI) => {
+    const response = await axios.delete(`/api/users/${payload.id}`);
+    thunkAPI.dispatch(getUserList());
+    return response.data;
+});
 
 export const usersSlice = createSlice({
     name: 'users',
@@ -117,6 +123,26 @@ export const usersSlice = createSlice({
             };
         },
         [postUser.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //deleteuser
+        [deleteUser.fulfilled.type]: (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [deleteUser.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [deleteUser.pending.type]: state => {
             return {
                 ...state,
                 loading: true,

@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, InputBase } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import SaveIcon from '@mui/icons-material/Save';
-import { getUserList } from '../reducers/users';
+import { getUserList, deleteUser } from '../reducers/users';
 import { RootState } from '../store';
 
 const ListUsers = () => {
@@ -13,9 +13,10 @@ const ListUsers = () => {
 
     const users: User[] = useSelector((state: RootState) => state.usersState.users);
 
-    const deleteUser = (id: number) => {
+    const deleteUserHandler = useCallback((id: number) => {
         console.log(id);
-    };
+        dispatch(deleteUser({id}))
+    },[]);
 
 
     useEffect(() => {
@@ -69,7 +70,7 @@ const ListUsers = () => {
                                         </Button>
                                     </TableCell>
                                     <TableCell>
-                                        <Button onClick={e => deleteUser(user.id)}>
+                                        <Button onClick={e => deleteUserHandler(user.id)}>
                                             <DeleteIcon />
                                         </Button>
                                     </TableCell>
