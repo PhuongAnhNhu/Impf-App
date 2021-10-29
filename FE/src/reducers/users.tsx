@@ -1,18 +1,9 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export interface UserState {
-    users: any;
-    loading: boolean;
-    loggedIn: boolean;
-}
 
-const initialState: UserState = { users: [], loading: false, loggedIn: false };
+const initialState: UsersState = { users: [], loading: false, loggedIn: false };
 
-interface LoginPayload {
-    username: string;
-    password: string;
-}
 
 //Login
 export const login = createAsyncThunk('users/login', async (payload: LoginPayload) => {
@@ -29,9 +20,17 @@ export const logout = createAsyncThunk('users/logout', async () => {
 
 //GET USERS : /api/users
 export const getUserList = createAsyncThunk('users/getUserList', async () => {
-    const response = await axios.get('/api/users');
-    return response.data;
+    const response = await axios.get<UserListResponse>('/api/users');
+    return response.data.collection;
 });
+
+//POST USER : 
+export const postUser = createAsyncThunk('users/postUser', async (payload: PostUserPayload, thunkAPI) => {
+    const response = await axios.post('/api/users', payload);
+    thunkAPI.dispatch(getUserList());
+    return response.data.collection;
+});
+
 
 export const usersSlice = createSlice({
     name: 'users',
@@ -83,7 +82,7 @@ export const usersSlice = createSlice({
             };
         },
 
-        //userlist
+        //getuserlist
         [getUserList.fulfilled.type]: (state, action) => {
             return {
                 ...state,
@@ -98,6 +97,26 @@ export const usersSlice = createSlice({
             };
         },
         [getUserList.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //postuser
+        [postUser.fulfilled.type]: (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [postUser.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [postUser.pending.type]: state => {
             return {
                 ...state,
                 loading: true,

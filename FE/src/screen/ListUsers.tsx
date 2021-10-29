@@ -2,46 +2,29 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, InputBase } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
-import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SaveIcon from '@mui/icons-material/Save';
 import { getUserList } from '../reducers/users';
 import { RootState } from '../store';
 
-export interface User {
-    id: number;
-    username: string;
-    firstname: string;
-    lastname: string;
-    isAdmin: number;
-}
-
 const ListUsers = () => {
-
-    const users : User[] = useSelector((state: RootState) => state.users.users.collection)
-
-    let data = users?.map((user, index) => {
-        return (
-            <TableRow hover key={user.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell><InputBase defaultValue={user.firstname} inputProps={{'aria-label':'user.nachname'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.lastname} inputProps={{'aria-label':'user.vorname'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.username} inputProps={{'aria-label':'user.userName'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.isAdmin} inputProps={{'aria-label':'user.password'}} /></TableCell>
-                <TableCell><Button>Speichern</Button></TableCell>
-                <TableCell><Button><DeleteIcon/></Button></TableCell>
-            </TableRow>
-        );
-    });
-
     const dispatch = useDispatch();
+
+    const users: User[] = useSelector((state: RootState) => state.usersState.users);
+
+    const deleteUser = (id: number) => {
+        console.log(id);
+    };
+
 
     useEffect(() => {
         dispatch(getUserList());
-    },[])
+    }, []);
 
     return (
-        <Box mr={2}>
-            <h2>Terminliste</h2>
+        <Box mr={2} mt={14}>
+            <h2>Userliste</h2>
 
             <Link to="/newuser">
                 <Button sx={{ marginBottom: '2rem' }} variant="outlined">
@@ -63,10 +46,39 @@ const ListUsers = () => {
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>{data}</TableBody>
+                    <TableBody>
+                        {users?.map((user, index) => {
+                            return (
+                                <TableRow hover key={user.id}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>
+                                        <InputBase defaultValue={user.firstname} inputProps={{ 'aria-label': 'user.nachname' }} />
+                                    </TableCell>
+                                    <TableCell>
+                                        <InputBase defaultValue={user.lastname} inputProps={{ 'aria-label': 'user.vorname' }} />
+                                    </TableCell>
+                                    <TableCell>
+                                        <InputBase defaultValue={user.username} inputProps={{ 'aria-label': 'user.userName' }} />
+                                    </TableCell>
+                                    <TableCell>
+                                        <InputBase defaultValue={user.isAdmin} inputProps={{ 'aria-label': 'user.password' }} />
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button>
+                                            <SaveIcon />
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button onClick={e => deleteUser(user.id)}>
+                                            <DeleteIcon />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
                 </Table>
             </TableContainer>
-    
         </Box>
     );
 };

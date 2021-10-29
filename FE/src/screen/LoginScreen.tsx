@@ -5,6 +5,7 @@ import { Box, FormControl, TextField, FormGroup, Button } from '@mui/material';
 import { login } from '../reducers/users';
 import { RootState } from '../store';
 
+
 const LoginScreen = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -14,16 +15,16 @@ const LoginScreen = () => {
 
     const onSubmit = useCallback(() => {
         dispatch(login({ username, password }));
-    }, [dispatch, username, password]);
+    }, [username, password]);
 
-    const usersState = useSelector((state: RootState) => state.users);
+    const usersState = useSelector((state: RootState) => state.usersState);
     const { loading, loggedIn } = usersState;
 
     useEffect(() => {
         if (loggedIn) {
             history.push('/');
         }
-    }, [history, loggedIn]);
+    }, [loggedIn]);
 
     return (
         <FormGroup>

@@ -16,7 +16,7 @@ const Navigation = () => {
         dispatch(logout());
     };
 
-    const usersState = useSelector((state: RootState) => state.users);
+    const usersState = useSelector((state: RootState) => state.usersState);
     const { loading, loggedIn } = usersState;
 
     useEffect(() => {
