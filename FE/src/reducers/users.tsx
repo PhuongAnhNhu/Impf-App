@@ -2,7 +2,7 @@ import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export interface UserState {
-    users: any[];
+    users: any;
     loading: boolean;
     loggedIn: boolean;
 }
@@ -20,9 +20,16 @@ export const login = createAsyncThunk('users/login', async (payload: LoginPayloa
     return response.data;
 });
 
+
 //Logout 
 export const logout = createAsyncThunk('users/logout', async () => {
     const response = await axios.post('/logout');
+    return response.data;
+});
+
+//GET USERS : /api/users
+export const getUserList = createAsyncThunk('users/getUserList', async () => {
+    const response = await axios.get('/api/users');
     return response.data;
 });
 
@@ -38,6 +45,8 @@ export const usersSlice = createSlice({
                 loading: false,
             };
         },
+
+        //login
         [login.rejected.type]: state => {
             return {
                 ...state,
@@ -51,6 +60,8 @@ export const usersSlice = createSlice({
                 loading: true,
             };
         },
+
+        //logout
         [logout.fulfilled.type]: state => {
             return {
                 ...state,
@@ -66,6 +77,27 @@ export const usersSlice = createSlice({
             };
         },
         [logout.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //userlist
+        [getUserList.fulfilled.type]: (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                users: action.payload
+            };
+        },
+        [getUserList.rejected.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+        [getUserList.pending.type]: state => {
             return {
                 ...state,
                 loading: true,

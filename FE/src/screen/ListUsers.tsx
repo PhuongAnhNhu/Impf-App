@@ -1,23 +1,43 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Link, InputBase } from '@mui/material';
-import users from '../dummydata/users';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { getUserList } from '../reducers/users';
+import { RootState } from '../store';
+
+export interface User {
+    id: number;
+    username: string;
+    firstname: string;
+    lastname: string;
+    isAdmin: number;
+}
 
 const ListUsers = () => {
+
+    const users : User[] = useSelector((state: RootState) => state.users.users.collection)
+
     let data = users.map((user, index) => {
         return (
             <TableRow hover key={user.id}>
                 <TableCell>{index + 1}</TableCell>
-                <TableCell><InputBase defaultValue={user.nachname} inputProps={{'aria-label':'user.nachname'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.vorname} inputProps={{'aria-label':'user.vorname'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.userName} inputProps={{'aria-label':'user.userName'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.password} inputProps={{'aria-label':'user.password'}} /></TableCell>
+                <TableCell><InputBase defaultValue={user.firstname} inputProps={{'aria-label':'user.nachname'}} /></TableCell>
+                <TableCell><InputBase defaultValue={user.lastname} inputProps={{'aria-label':'user.vorname'}} /></TableCell>
+                <TableCell><InputBase defaultValue={user.username} inputProps={{'aria-label':'user.userName'}} /></TableCell>
+                <TableCell><InputBase defaultValue={user.isAdmin} inputProps={{'aria-label':'user.password'}} /></TableCell>
                 <TableCell><Button>Speichern</Button></TableCell>
                 <TableCell><Button><DeleteIcon/></Button></TableCell>
             </TableRow>
         );
     });
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getUserList());
+    },[dispatch])
+
     return (
         <Box mr={2}>
             <h2>Terminliste</h2>
@@ -37,7 +57,7 @@ const ListUsers = () => {
                             <TableCell>Vorname</TableCell>
                             <TableCell>Nachname</TableCell>
                             <TableCell>Username</TableCell>
-                            <TableCell>Password</TableCell>
+                            <TableCell>Admin</TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                         </TableRow>
