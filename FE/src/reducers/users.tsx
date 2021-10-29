@@ -20,6 +20,12 @@ export const login = createAsyncThunk('users/login', async (payload: LoginPayloa
     return response.data;
 });
 
+//Logout 
+export const logout = createAsyncThunk('users/logout', async () => {
+    const response = await axios.post('/logout');
+    return response.data;
+});
+
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -45,7 +51,31 @@ export const usersSlice = createSlice({
                 loading: true,
             };
         },
+        [logout.fulfilled.type]: state => {
+            return {
+                ...state,
+                loggedIn: false,
+                loading: false,
+            };
+        },
+        [logout.rejected.type]: state => {
+            return {
+                ...state,
+                loggedIn: false,
+                loading: true,
+            };
+        },
+        [logout.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
     },
 });
+
+
+
+
 
 export default usersSlice.reducer;
