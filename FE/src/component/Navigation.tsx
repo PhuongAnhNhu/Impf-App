@@ -14,7 +14,6 @@ const Navigation = () => {
 
     const logoutHandler = () => {
         dispatch(logout());
-        console.log('logout');
     };
 
     const usersState = useSelector((state: RootState) => state.users);
@@ -24,7 +23,7 @@ const Navigation = () => {
         if (!loggedIn) {
             history.push('/login');
         }
-    }, [history, loggedIn]);
+    }, [loggedIn]);
 
     return (
         <Box>

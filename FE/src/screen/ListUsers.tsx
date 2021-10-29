@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Link, InputBase } from '@mui/material';
+import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, InputBase } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Link } from 'react-router-dom'
 import DeleteIcon from '@mui/icons-material/Delete';
 import { getUserList } from '../reducers/users';
 import { RootState } from '../store';
@@ -18,7 +19,7 @@ const ListUsers = () => {
 
     const users : User[] = useSelector((state: RootState) => state.users.users.collection)
 
-    let data = users.map((user, index) => {
+    let data = users?.map((user, index) => {
         return (
             <TableRow hover key={user.id}>
                 <TableCell>{index + 1}</TableCell>
@@ -36,13 +37,13 @@ const ListUsers = () => {
 
     useEffect(() => {
         dispatch(getUserList());
-    },[dispatch])
+    },[])
 
     return (
         <Box mr={2}>
             <h2>Terminliste</h2>
 
-            <Link href="/newuser">
+            <Link to="/newuser">
                 <Button sx={{ marginBottom: '2rem' }} variant="outlined">
                     <AddIcon />
                     Neuer User
