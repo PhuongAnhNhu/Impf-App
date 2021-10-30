@@ -1,23 +1,45 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, InputBase } from '@mui/material';
+import {
+    Box,
+    Table,
+    Paper,
+    TableRow,
+    TableHead,
+    TableContainer,
+    TableCell,
+    TableBody,
+    Button,
+    DialogActions,
+    Dialog,
+    DialogContent,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
-import SaveIcon from '@mui/icons-material/Save';
+import CreateIcon from '@mui/icons-material/Create';
 import { getUserList, deleteUser } from '../reducers/users';
 import { RootState } from '../store';
+import EditUser from '../component/EditUser';
 
 const ListUsers = () => {
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const dispatch = useDispatch();
 
     const users: User[] = useSelector((state: RootState) => state.usersState.users);
 
     const deleteUserHandler = useCallback((id: number) => {
-        console.log(id);
-        dispatch(deleteUser({id}))
-    },[]);
-
+        dispatch(deleteUser({ id }));
+    }, []);
 
     useEffect(() => {
         dispatch(getUserList());
@@ -53,21 +75,29 @@ const ListUsers = () => {
                                 <TableRow hover key={user.id}>
                                     <TableCell>{index + 1}</TableCell>
                                     <TableCell>
-                                        <InputBase defaultValue={user.firstname} inputProps={{ 'aria-label': 'user.nachname' }} />
+                                        <p>{user.firstname} </p>
                                     </TableCell>
                                     <TableCell>
-                                        <InputBase defaultValue={user.lastname} inputProps={{ 'aria-label': 'user.vorname' }} />
+                                        <p>{user.lastname} </p>
                                     </TableCell>
                                     <TableCell>
-                                        <InputBase defaultValue={user.username} inputProps={{ 'aria-label': 'user.userName' }} />
+                                        <p>{user.username} </p>
                                     </TableCell>
                                     <TableCell>
-                                        <InputBase defaultValue={user.isAdmin} inputProps={{ 'aria-label': 'user.password' }} />
+                                        <p>{user.isAdmin} </p>
                                     </TableCell>
                                     <TableCell>
-                                        <Button>
-                                            <SaveIcon />
+                                        <Button onClick={handleClickOpen}>
+                                            <CreateIcon />
                                         </Button>
+                                        <Dialog open={open} onClose={handleClose}>
+                                            <DialogContent>
+                                                <EditUser />
+                                            </DialogContent>
+                                            <DialogActions>
+                                                <Button onClick={handleClose}>Speichern</Button>
+                                            </DialogActions>
+                                        </Dialog>
                                     </TableCell>
                                     <TableCell>
                                         <Button onClick={e => deleteUserHandler(user.id)}>
