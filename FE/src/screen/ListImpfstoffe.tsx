@@ -20,6 +20,7 @@ const ListImpfstoffe = () => {
         <div>
             <Box mr={2}>
                 <h2>Impfstoffe</h2>
+                {/* TODO: Link must from react-router-dom */}
                 <Link href="/impfstoff" color="inherit" underline="none">
                     <Button sx={{marginBottom: '1rem'}} variant="outlined">
                         <AddIcon /> Impfstoffe eintragen

@@ -4,6 +4,7 @@ import patients from '../dummydata/patients';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+
 const ListPatients = () => {
     let data = patients.map((patient, index) => {
         return (
@@ -54,7 +55,7 @@ const ListPatients = () => {
     return (
         <Box mr={2}>
             <h2>Patientsliste</h2>
-
+{/* TODO: Link must from react-router-dom */}
             <Link href="/newpatient">
                 <Button sx={{ marginBottom: '2rem' }} variant="outlined">
                     <AddIcon />

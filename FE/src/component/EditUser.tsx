@@ -1,29 +1,37 @@
-import React, { useCallback, useState } from 'react';
-import {useHistory} from 'react-router'
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch,useSelector } from 'react-redux';
 import { Box, FormControl, FormLabel, Input, InputLabel, Button, Checkbox, FormControlLabel } from '@mui/material';
-import { postUser } from '../reducers/users';
+import { RootState } from '../store';
+import { putUser } from '../reducers/users';
 
-const NewUser = () => {
-    const [username, setUsername] = useState('');
+interface EditUserProps {
+    id: number;
+}
+
+const EditUser = ({ id }: EditUserProps) => {
+    const users: User[] = useSelector((state: RootState) => state.usersState.users);
+
+    const user: User = users.find(element => id === element.id);
+
+    const dispatch = useDispatch();
+
+    const [username, setUsername] = useState(user.username);
     const [password, setPassword] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [firstname, setFirstName] = useState('');
-    const [lastname, setLastName] = useState('');
+    const [admin, setIsAdmin] = useState(user.isAdmin);
+    const [firstname, setFirstName] = useState(user.firstname);
+    const [lastname, setLastName] = useState(user.lastname);
 
-    let dispatch = useDispatch();
-    const history = useHistory();
 
-    const onSubmit = useCallback(() => {
-        dispatch(postUser({ username, password, isAdmin, firstname, lastname }));
-        history.push("/listusers");
-    }, [username, password, isAdmin, firstname, lastname]);
+    const saveHandler = () => {
+        const isAdmin = Boolean(admin);
+        dispatch(putUser({id,username, password, isAdmin, firstname, lastname}))
+    }
 
     return (
-        <Box mt={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
             <Box sx={{ width: '75%' }}>
                 <FormControl fullWidth margin="normal">
-                    <FormLabel component="legend">Neuer Benutzer</FormLabel>
+                    <FormLabel component="legend">Bear Benutzer</FormLabel>
 
                     <FormControl margin="dense">
                         <InputLabel htmlFor="Vorname">Vorname</InputLabel>
@@ -65,9 +73,12 @@ const NewUser = () => {
                         />
                     </FormControl>
 
-                    <FormControlLabel control={<Checkbox checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)} name="gilad" />} label="Admin" />
+                    <FormControlLabel
+                        control={<Checkbox checked={Boolean(admin)} onChange={e => setIsAdmin(e.target.checked ? 1 : 0)} name="gilad" />}
+                        label="Admin"
+                    />
 
-                    <Button onClick={onSubmit} sx={{ marginTop: '2rem' }} variant="outlined">
+                    <Button onClick={saveHandler} sx={{ marginTop: '2rem' }} variant="outlined">
                         Speichern
                     </Button>
                 </FormControl>
@@ -76,4 +87,4 @@ const NewUser = () => {
     );
 };
 
-export default NewUser;
+export default EditUser;

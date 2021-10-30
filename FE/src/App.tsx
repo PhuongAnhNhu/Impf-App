@@ -16,18 +16,18 @@ function App() {
   return (
     <div className="App">
       <Router>
-      <Navigation />
-        <Route path="/login" component={LoginScreen} />
+        <Navigation />
         <Route path="/" component={HomeScreen} exact/>
-        <Route path="/newuser" component={NewUser}/>
-        <Route path="/appointment" component={Appointment}/>
-        <Route path="/impfstoff" component={Impfstopff}/>
-        <Route path="/newpatient" component={NewPatient}/>
-        <Route path="/listappointments" component={ListAppointments}/>
-        <Route path="/listpatients" component={ListPatients}/>
-        <Route path="/listimpfstoffe" component={ListImpfstoffe}/>
-        <Route path="/listusers" component={ListUsers}/>
+        <Route path="/newuser" component={NewUser} exact/>
+        <Route path="/appointment" component={Appointment} exact/>
+        <Route path="/impfstoff" component={Impfstopff} exact/>
+        <Route path="/newpatient" component={NewPatient} exact/>
+        <Route path="/listappointments" component={ListAppointments} exact/>
+        <Route path="/listpatients" component={ListPatients} exact/>
+        <Route path="/listimpfstoffe" component={ListImpfstoffe} exact/>
+        <Route path="/listusers" component={ListUsers} exact/>
        
+        <Route path="/login" component={LoginScreen} exact/>
       
       </Router>
     </div>

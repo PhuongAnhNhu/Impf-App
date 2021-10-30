@@ -1,28 +1,55 @@
-import React from 'react';
-import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Link, InputBase } from '@mui/material';
-import users from '../dummydata/users';
+import React, { useEffect, useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+    Box,
+    Table,
+    Paper,
+    TableRow,
+    TableHead,
+    TableContainer,
+    TableCell,
+    TableBody,
+    Button,
+    Dialog,
+    DialogContent,
+} from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
+import CreateIcon from '@mui/icons-material/Create';
+import { getUserList, deleteUser} from '../reducers/users';
+import { RootState } from '../store';
+import EditUser from '../component/EditUser';
 
 const ListUsers = () => {
-    let data = users.map((user, index) => {
-        return (
-            <TableRow hover key={user.id}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell><InputBase defaultValue={user.nachname} inputProps={{'aria-label':'user.nachname'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.vorname} inputProps={{'aria-label':'user.vorname'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.userName} inputProps={{'aria-label':'user.userName'}} /></TableCell>
-                <TableCell><InputBase defaultValue={user.password} inputProps={{'aria-label':'user.password'}} /></TableCell>
-                <TableCell><Button>Speichern</Button></TableCell>
-                <TableCell><Button><DeleteIcon/></Button></TableCell>
-            </TableRow>
-        );
-    });
-    return (
-        <Box mr={2}>
-            <h2>Terminliste</h2>
+    const dispatch = useDispatch();
+    const users: User[] = useSelector((state: RootState) => state.usersState.users);
+    
+    const [selectedId, setSelectedId] = useState<number | null>(null);
 
-            <Link href="/newuser">
+    const handleClickOpen = (id: number) => {
+        setSelectedId(id);
+    };
+
+    const handleClose = () => {
+        setSelectedId(null);
+    };
+
+
+
+    const deleteUserHandler = useCallback((id: number) => {
+        dispatch(deleteUser({ id }));
+    }, []);
+
+    useEffect(() => {
+        dispatch(getUserList());
+    }, []);
+
+    return (
+        <Box mr={2} mt={14}>
+            <h2>Userliste</h2>
+
+            <Link to="/newuser">
                 <Button sx={{ marginBottom: '2rem' }} variant="outlined">
                     <AddIcon />
                     Neuer User
@@ -37,15 +64,52 @@ const ListUsers = () => {
                             <TableCell>Vorname</TableCell>
                             <TableCell>Nachname</TableCell>
                             <TableCell>Username</TableCell>
-                            <TableCell>Password</TableCell>
+                            <TableCell>Admin</TableCell>
                             <TableCell></TableCell>
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>{data}</TableBody>
+                    <TableBody>
+                        {users?.map((user, index) => {
+                            return (
+                                <TableRow hover key={user.id}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>
+                                        <p>{user.firstname} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{user.lastname} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{user.username} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{user.isAdmin} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button onClick={e => handleClickOpen(user.id)}>
+                                            <CreateIcon />
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button onClick={e => deleteUserHandler(user.id)}>
+                                            <DeleteIcon />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
                 </Table>
             </TableContainer>
-    
+
+            {selectedId && (
+                <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
+                    <DialogContent>
+                        <EditUser id={selectedId} />
+                    </DialogContent>
+                </Dialog>
+            )}
         </Box>
     );
 };
