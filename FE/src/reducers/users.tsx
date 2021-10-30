@@ -38,6 +38,13 @@ export const deleteUser = createAsyncThunk('users/deleteUser', async (payload: D
     return response.data;
 });
 
+//PUT USER: 
+export const putUser = createAsyncThunk('users/putUser', async (payload: PutUserPayload, thunkAPI) => {
+    const response = await axios.put(`/api/users/${payload.id}`, payload);
+    thunkAPI.dispatch(getUserList());
+    return response.data;
+});
+
 export const usersSlice = createSlice({
     name: 'users',
     initialState,
@@ -143,6 +150,26 @@ export const usersSlice = createSlice({
             };
         },
         [deleteUser.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //putuser
+        [putUser.fulfilled.type]: (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [putUser.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [putUser.pending.type]: state => {
             return {
                 ...state,
                 loading: true,

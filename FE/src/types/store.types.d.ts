@@ -33,3 +33,13 @@ interface UserListResponse {
 interface DeleteUserPayload {
     id:number;
 }
+
+interface PutUserPayload {
+    id:number;
+    username?: string;
+    password?: any;
+    isAdmin?: boolean;
+    firstname?: string;
+    lastname?: string;
+}
+

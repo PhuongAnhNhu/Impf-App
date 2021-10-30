@@ -10,7 +10,6 @@ import {
     TableCell,
     TableBody,
     Button,
-    DialogActions,
     Dialog,
     DialogContent,
 } from '@mui/material';
@@ -18,24 +17,25 @@ import AddIcon from '@mui/icons-material/Add';
 import { Link } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
-import { getUserList, deleteUser } from '../reducers/users';
+import { getUserList, deleteUser} from '../reducers/users';
 import { RootState } from '../store';
 import EditUser from '../component/EditUser';
 
 const ListUsers = () => {
-    const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
+    const users: User[] = useSelector((state: RootState) => state.usersState.users);
+    
+    const [selectedId, setSelectedId] = useState<number | null>(null);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickOpen = (id: number) => {
+        setSelectedId(id);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setSelectedId(null);
     };
 
-    const dispatch = useDispatch();
 
-    const users: User[] = useSelector((state: RootState) => state.usersState.users);
 
     const deleteUserHandler = useCallback((id: number) => {
         dispatch(deleteUser({ id }));
@@ -87,17 +87,9 @@ const ListUsers = () => {
                                         <p>{user.isAdmin} </p>
                                     </TableCell>
                                     <TableCell>
-                                        <Button onClick={handleClickOpen}>
+                                        <Button onClick={e => handleClickOpen(user.id)}>
                                             <CreateIcon />
                                         </Button>
-                                        <Dialog open={open} onClose={handleClose}>
-                                            <DialogContent>
-                                                <EditUser />
-                                            </DialogContent>
-                                            <DialogActions>
-                                                <Button onClick={handleClose}>Speichern</Button>
-                                            </DialogActions>
-                                        </Dialog>
                                     </TableCell>
                                     <TableCell>
                                         <Button onClick={e => deleteUserHandler(user.id)}>
@@ -110,6 +102,14 @@ const ListUsers = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
+
+            {selectedId && (
+                <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
+                    <DialogContent>
+                        <EditUser id={selectedId} />
+                    </DialogContent>
+                </Dialog>
+            )}
         </Box>
     );
 };
