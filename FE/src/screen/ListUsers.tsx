@@ -84,7 +84,7 @@ const ListUsers = () => {
                                         <p>{user.username} </p>
                                     </TableCell>
                                     <TableCell>
-                                        <p>{user.isAdmin} </p>
+                                        <p>{Boolean(user.isAdmin) ? "true" : "false"} </p>
                                     </TableCell>
                                     <TableCell>
                                         <Button onClick={e => handleClickOpen(user.id)}>
