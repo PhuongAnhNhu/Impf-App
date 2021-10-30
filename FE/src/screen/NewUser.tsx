@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import {useHistory} from 'react-router'
 import { useDispatch } from 'react-redux';
 import { Box, FormControl, FormLabel, Input, InputLabel, Button, Checkbox, FormControlLabel } from '@mui/material';
 import { postUser } from '../reducers/users';
@@ -11,9 +12,11 @@ const NewUser = () => {
     const [lastname, setLastName] = useState('');
 
     let dispatch = useDispatch();
+    const history = useHistory();
 
     const onSubmit = useCallback(() => {
         dispatch(postUser({ username, password, isAdmin, firstname, lastname }));
+        history.push("/listusers");
     }, [username, password, isAdmin, firstname, lastname]);
 
     return (
