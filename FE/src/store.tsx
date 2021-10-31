@@ -1,9 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import usersReducer from './reducers/users';
 import patientsReducer from './reducers/patients';
+import appointmentsReducer from './reducers/appointments';
 
 export const store = configureStore({
-    reducer: { usersState: usersReducer, patientsState: patientsReducer },
+    reducer: { usersState: usersReducer, patientsState: patientsReducer, appointmentsState: appointmentsReducer },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

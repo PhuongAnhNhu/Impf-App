@@ -60,3 +60,16 @@ interface PatientsState {
     patients: Patient[];
     loading: boolean;
 }
+
+interface Appointment {
+    id:number;
+    date:Date;
+    vaccine_dose: string;
+    patient: string;
+    user: number;
+}
+
+interface AppointmentsState {
+    appointments: Appointment[];
+    loading: boolean;
+}
