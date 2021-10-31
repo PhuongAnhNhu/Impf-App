@@ -1,5 +1,6 @@
 const patients = [
     {
+        id: 1,
         vorname: 'Müller',
         nachname: 'Max',
         versicherungsnummer: 'abc123456',
@@ -9,6 +10,7 @@ const patients = [
         adresse: 'Spreestr.100, 12345 Berlin',
     },
     {
+        id: 12,
         vorname: 'Müster',
         nachname: 'Tim',
         versicherungsnummer: 'abc123457',
@@ -18,6 +20,7 @@ const patients = [
         adresse: 'Spreestr.100, 12345 Berlin',
     },
     {
+        id: 13,
         vorname: 'Puth',
         nachname: 'Min',
         versicherungsnummer: 'abc123458',
@@ -27,6 +30,7 @@ const patients = [
         adresse: 'Spreestr.100, 12345 Berlin',
     },
     {
+        id: 14,
         vorname: 'Otto',
         nachname: 'Lily',
         versicherungsnummer: 'abc123459',
