@@ -1,23 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-interface Patient {
-    id: number;
-    insurance: string;
-    kkv: string;
-    firstname: string;
-    lastname: string;
-    dateofbirth: Date;
-    gender: string;
-    address: string;
-    zip: string;
-    city: string;
-}
 
-interface PatientsState {
-    patients: Patient[];
-    loading: boolean;
-}
 const initialState: PatientsState = { patients: [], loading: false };
 
 //GET patients

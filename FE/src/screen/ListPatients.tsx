@@ -1,62 +1,39 @@
-import React from 'react';
-import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Link, InputBase } from '@mui/material';
-import patients from '../dummydata/patients';
+import React, { useEffect, useState } from 'react';
+import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Dialog, DialogContent } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
-
+import CreateIcon from '@mui/icons-material/Create';
+import { getPatients } from '../reducers/patients';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { Link } from 'react-router-dom';
 
 const ListPatients = () => {
-    let data = patients.map((patient, index) => {
-        return (
-            <TableRow hover key={patient.versicherungsnummer}>
-                <TableCell>{index + 1}</TableCell>
-                <TableCell>
-                    <InputBase  sx={{
-                            width: '5rem',
-                            overflowWrap: 'break-word',
-                        }} defaultValue={patient.vorname} inputProps={{ 'aria-label': 'patient.nachname' }} />
-                </TableCell>
-                <TableCell>
-                    <InputBase defaultValue={patient.nachname} inputProps={{ 'aria-label': 'patient.vorname' }} />
-                </TableCell>
-                <TableCell>
-                    <InputBase defaultValue={patient.versicherungsnummer} inputProps={{ 'aria-label': 'patient.patientName' }} />
-                </TableCell>
-                <TableCell>
-                    <InputBase defaultValue={patient.kvNummer} inputProps={{ 'aria-label': 'patient.password' }} />
-                </TableCell>
-                <TableCell>
-                    <InputBase defaultValue={patient.geschlecht} inputProps={{ 'aria-label': 'patient.password' }} />
-                </TableCell>
-                <TableCell>
-                    <InputBase defaultValue={patient.gebDatum} inputProps={{ 'aria-label': 'patient.password' }} />
-                </TableCell>
-                <TableCell>
-                    <InputBase
-                        sx={{
-                            width: '15rem',
-                            overflowWrap: 'break-word',
-                        }}
-                        defaultValue={patient.adresse}
-                        inputProps={{ 'aria-label': 'patient.password' }}
-                    />
-                </TableCell>
-                <TableCell>
-                    <Button>Speichern</Button>
-                </TableCell>
-                <TableCell>
-                    <Button>
-                        <DeleteIcon />
-                    </Button>
-                </TableCell>
-            </TableRow>
-        );
-    });
+    const dispatch = useDispatch();
+
+    const patients: Patient[] = useSelector((state: RootState) => state.patientsState.patients);
+
+    const [selectedId, setSelectedId] = useState<number | null>(null);
+
+    const handleClickOpen = (id: number) => {
+        setSelectedId(id);
+    };
+
+    const handleClose = () => {
+        setSelectedId(null);
+    };
+
+    useEffect(() => {
+        dispatch(getPatients());
+    }, []);
+
+    console.log(patients);
+
     return (
-        <Box mr={2}>
+        <Box mr={2} mt={10}>
             <h2>Patientsliste</h2>
-{/* TODO: Link must from react-router-dom */}
-            <Link href="/newpatient">
+
+            <Link to="/newpatient">
                 <Button sx={{ marginBottom: '2rem' }} variant="outlined">
                     <AddIcon />
                     Neuer Patient
@@ -79,9 +56,55 @@ const ListPatients = () => {
                             <TableCell></TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>{data}</TableBody>
+                    <TableBody>
+                        {patients?.map((patient, index) => {
+                            return (
+                                <TableRow hover key={patient.insurance}>
+                                    <TableCell>{index + 1}</TableCell>
+                                    <TableCell>
+                                        <p>{patient.firstname}</p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{patient.lastname} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{patient.insurance} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{patient.kkv} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{patient.gender} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{patient.dateofbirth} </p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <p>{`${patient.address} +", "+ ${patient.zip} + ", " + ${patient.city}`}</p>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button onClick={e => handleClickOpen(patient.id)}>
+                                            <CreateIcon />
+                                        </Button>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button>
+                                            <DeleteIcon />
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
                 </Table>
             </TableContainer>
+
+            {selectedId && (
+                <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
+                    {/* TODO: Edit Patient Dialog */}
+                    <DialogContent>{/* <EditUser id={selectedId} /> */}</DialogContent>
+                </Dialog>
+            )}
         </Box>
     );
 };
