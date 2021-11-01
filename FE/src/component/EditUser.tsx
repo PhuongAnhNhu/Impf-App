@@ -31,7 +31,7 @@ const EditUser = ({ id }: EditUserProps) => {
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
             <Box sx={{ width: '75%' }}>
                 <FormControl fullWidth margin="normal">
-                    <FormLabel component="legend">Bear Benutzer</FormLabel>
+                    <FormLabel component="legend">Bearbeiten Benutzer</FormLabel>
 
                     <FormControl margin="dense">
                         <InputLabel htmlFor="Vorname">Vorname</InputLabel>

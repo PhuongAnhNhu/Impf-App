@@ -1,10 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Box, FormControl, TextField, FormGroup, Button } from '@mui/material';
+import { Box, FormControl, TextField, FormGroup, Button, CircularProgress } from '@mui/material';
 import { login } from '../reducers/users';
 import { RootState } from '../store';
-
 
 const LoginScreen = () => {
     const [username, setUsername] = useState('');
@@ -27,25 +26,35 @@ const LoginScreen = () => {
     }, [loggedIn]);
 
     return (
-        <FormGroup>
-            {loading && <div>LoadingComponent</div>}
-            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }} mt={30}>
-                <Box sx={{ '& > :not(style)': { m: 1 } }}>
-                    <FormControl fullWidth variant="standard">
-                        <TextField label="Username" value={username} onChange={e => setUsername(e.target.value)} />
-                    </FormControl>
+        <Box mt={20}>
+            <FormGroup>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                {loading && <CircularProgress size={100}/>}
+                {!loggedIn && (
+                        <Box>
+                            <img src="/logo.png" width="100" alt="logo"></img>
+                            <h2>Impf-App</h2>
+                        </Box>
+                )}
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <Box sx={{ '& > :not(style)': { m: 1 } }}>
+                        <FormControl fullWidth variant="standard">
+                            <TextField label="Username" value={username} onChange={e => setUsername(e.target.value)} />
+                        </FormControl>
 
-                    <FormControl fullWidth variant="standard">
-                        <TextField label="Password" value={password} onChange={e => setPassword(e.target.value)} type="password" />
-                    </FormControl>
+                        <FormControl fullWidth variant="standard">
+                            <TextField label="Password" value={password} onChange={e => setPassword(e.target.value)} type="password" />
+                        </FormControl>
+                    </Box>
+                    <Box mt={5}>
+                        <Button onClick={onSubmit} variant="outlined">
+                            Login
+                        </Button>
+                    </Box>
                 </Box>
-                <Box mt={5}>
-                    <Button onClick={onSubmit} variant="outlined">
-                        Login
-                    </Button>
-                </Box>
-            </Box>
-        </FormGroup>
+            </FormGroup>
+        </Box>
     );
 };
 

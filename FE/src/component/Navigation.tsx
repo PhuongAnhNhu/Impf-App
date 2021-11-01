@@ -17,7 +17,7 @@ const Navigation = () => {
     };
 
     const usersState = useSelector((state: RootState) => state.usersState);
-    const { loading, loggedIn } = usersState;
+    const { loggedIn } = usersState;
 
     useEffect(() => {
         if (!loggedIn) {
@@ -27,15 +27,6 @@ const Navigation = () => {
 
     return (
         <Box>
-            {loading && <div>LoandingComponent</div>}
-            {!loggedIn && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                    <Box>
-                        <img src="/logo.png" width="100" alt="logo"></img>
-                        <h2>Impf-App</h2>
-                    </Box>
-                </Box>
-            )}
             {loggedIn && (
                 <AppBar color="inherit">
                     <Toolbar>
