@@ -4,13 +4,13 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const initialState: VaccineDosesState = { vaccineDoses: [], loading: false };
 
 //GET vaccindoses
-export const getVaccineDoses = createAsyncThunk('patients/getVaccineDoses', async () => {
+export const getVaccineDoses = createAsyncThunk('vaccineDoses/getVaccineDoses', async () => {
     const response = await axios.get('/api/vaccine_doses');
     return response.data.collection;
 });
 
 export const vaccineDosesSlice = createSlice({
-    name: 'patients',
+    name: 'vaccineDoses',
     initialState,
     reducers: {},
     extraReducers: {
