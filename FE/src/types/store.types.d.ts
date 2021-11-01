@@ -73,3 +73,15 @@ interface AppointmentsState {
     appointments: Appointment[];
     loading: boolean;
 }
+
+interface VaccineDose {
+    id: number;
+    createAt: Date;
+    expiresAt: Date;
+    vaccine: string;
+}
+
+interface VaccineDosesState {
+    vaccineDoses: VaccineDose[];
+    loading: boolean;
+}

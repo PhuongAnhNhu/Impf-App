@@ -27,8 +27,6 @@ const ListPatients = () => {
         dispatch(getPatients());
     }, []);
 
-    console.log(patients);
-
     return (
         <Box mr={2} mt={10}>
             <h2>Patientsliste</h2>
