@@ -61,6 +61,10 @@ interface PatientsState {
     loading: boolean;
 }
 
+interface DeletePatientPayload {
+    id:number;
+}
+
 interface Appointment {
     id:number;
     date:Date;

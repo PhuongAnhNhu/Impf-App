@@ -20,7 +20,8 @@ import { getPatients } from "../reducers/patients";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { Link } from "react-router-dom";
-import moment from 'moment';
+import moment from "moment";
+import { deletePatient } from "../reducers/patients";
 
 const ListPatients = () => {
     const dispatch = useDispatch();
@@ -37,6 +38,10 @@ const ListPatients = () => {
 
     const handleClose = () => {
         setSelectedId(null);
+    };
+
+    const deleteHandler = (id: number) => {
+        dispatch(deletePatient({ id }));
     };
 
     useEffect(() => {
@@ -93,10 +98,10 @@ const ListPatients = () => {
                                             <p>{patient.gender} </p>
                                         </TableCell>
                                         <TableCell>
-                                            <p>{moment.utc(patient.dateOfBirth).format('DD-HH-YYYY')} </p>
+                                            <p>{moment.utc(patient.dateOfBirth).format("DD-HH-YYYY")} </p>
                                         </TableCell>
                                         <TableCell>
-                                            <p>{`${patient.address} +", "+ ${patient.zip} + ", " + ${patient.city}`}</p>
+                                            <p>{`${patient.address}, ${patient.zip}, ${patient.city}`}</p>
                                         </TableCell>
                                         <TableCell>
                                             <Button onClick={(e) => handleClickOpen(patient.id)}>
@@ -105,7 +110,7 @@ const ListPatients = () => {
                                         </TableCell>
                                         <TableCell>
                                             <Button>
-                                                <DeleteIcon />
+                                                <DeleteIcon onClick={(e) => deleteHandler(patient.id)} />
                                             </Button>
                                         </TableCell>
                                     </TableRow>

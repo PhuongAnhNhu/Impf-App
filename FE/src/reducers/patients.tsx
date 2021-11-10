@@ -10,6 +10,13 @@ export const getPatients = createAsyncThunk('patients/getPatients', async () => 
     return response.data.collection;
 });
 
+//DEL patient 
+export const deletePatient = createAsyncThunk('patients/deletePatient', async (payload: DeletePatientPayload, thunkAPI) => {
+    const response = await axios.delete(`/api/patients/${payload.id}`);
+    thunkAPI.dispatch(getPatients());
+    return response.data;
+});
+
 export const patientsSlice = createSlice({
     name: 'patients',
     initialState,
