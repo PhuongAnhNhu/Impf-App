@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Table,
@@ -12,14 +12,15 @@ import {
     Dialog,
     DialogContent,
     CircularProgress,
-} from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import DeleteIcon from '@mui/icons-material/Delete';
-import CreateIcon from '@mui/icons-material/Create';
-import { getPatients } from '../reducers/patients';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import { Link } from 'react-router-dom';
+} from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
+import CreateIcon from "@mui/icons-material/Create";
+import { getPatients } from "../reducers/patients";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store";
+import { Link } from "react-router-dom";
+import moment from 'moment';
 
 const ListPatients = () => {
     const dispatch = useDispatch();
@@ -47,7 +48,7 @@ const ListPatients = () => {
             <h2>Patientsliste</h2>
 
             <Link to="/newpatient">
-                <Button sx={{ marginBottom: '2rem' }} variant="outlined">
+                <Button sx={{ marginBottom: "2rem" }} variant="outlined">
                     <AddIcon />
                     Neuer Patient
                 </Button>
@@ -92,13 +93,13 @@ const ListPatients = () => {
                                             <p>{patient.gender} </p>
                                         </TableCell>
                                         <TableCell>
-                                            <p>{patient.dateofbirth} </p>
+                                            <p>{moment.utc(patient.dateOfBirth).format('DD-HH-YYYY')} </p>
                                         </TableCell>
                                         <TableCell>
                                             <p>{`${patient.address} +", "+ ${patient.zip} + ", " + ${patient.city}`}</p>
                                         </TableCell>
                                         <TableCell>
-                                            <Button onClick={e => handleClickOpen(patient.id)}>
+                                            <Button onClick={(e) => handleClickOpen(patient.id)}>
                                                 <CreateIcon />
                                             </Button>
                                         </TableCell>

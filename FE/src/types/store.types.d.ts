@@ -49,7 +49,7 @@ interface Patient {
     kkv: string;
     firstname: string;
     lastname: string;
-    dateofbirth: Date;
+    dateOfBirth: Date;
     gender: string;
     address: string;
     zip: string;
