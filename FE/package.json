@@ -45,9 +45,13 @@
       "react-app",
       "react-app/jest"
     ],
-    "plugins": ["react-hooks"],
+    "plugins": [
+      "react-hooks"
+    ],
     "rules": {
-      "react-hooks/exhaustive-deps": ["off"]
+      "react-hooks/exhaustive-deps": [
+        "off"
+      ]
     }
   },
   "browserslist": {
