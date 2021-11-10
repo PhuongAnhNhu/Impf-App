@@ -42,6 +42,25 @@ export const patientsSlice = createSlice({
                 loading: true,
             };
         },
+        //deleteuser
+        [deletePatient.fulfilled.type]: (state) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [deletePatient.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [deletePatient.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
     },
 });
 
