@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Box, FormControl, FormLabel, Input, InputLabel, Button, TextField } from "@mui/material";
+import { Box, FormControl, FormLabel, Input, InputLabel, Button, TextField, Autocomplete } from "@mui/material";
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import deLocale from "date-fns/locale/de";
@@ -19,6 +19,8 @@ const NewPatient = () => {
     const [zip, setZip] = useState("");
     const [city, setCity] = useState("");
 
+    const genderOption = ["male", "female", "diverse"];
+
     const localeMap = {
         de: deLocale,
     };
@@ -29,58 +31,70 @@ const NewPatient = () => {
 
     let dispatch = useDispatch();
     const history = useHistory();
-    
-    const saveHandler =useCallback( () => {
+
+    const saveHandler = useCallback(() => {
         const dateOfBirth = String(date);
-      dispatch(postPatient({firstname, lastname, insurance, kkv, gender, dateOfBirth, address, zip, city}));
-      history.push("/listpatients")
-    }, [firstname, lastname, insurance, kkv, gender, date, address, zip, city])
-
-
+        dispatch(postPatient({ firstname, lastname, insurance, kkv, gender, dateOfBirth, address, zip, city }));
+        history.push("/listpatients");
+    }, [firstname, lastname, insurance, kkv, gender, date, address, zip, city]);
 
     return (
         <Box mt={10} sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <Box sx={{ width: "75%" }}>
-            <FormControl fullWidth margin="normal">
-            <FormLabel component="legend">Neuer Patient</FormLabel>
-            <FormControl margin="dense">
-                        <InputLabel htmlFor="Vorname">Vorname</InputLabel>
-                        <Input
-                            id="Vorname"
-                            aria-describedby="my-helper-text"
+                <FormControl fullWidth margin="normal">
+                    <FormLabel component="legend">Neuer Patient</FormLabel>
+                    <FormControl margin="dense">
+                        <TextField
+                            required
+                            label="Vorname"
+                            variant="standard"
                             value={firstname}
                             onChange={(e) => setFirstname(e.target.value)}
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="Nachname">Nachname</InputLabel>
-                        <Input
-                            id="Nachname"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            label="Nachname"
+                            variant="standard"
                             value={lastname}
                             onChange={(e) => setLastName(e.target.value)}
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">Versicherungsnummer</InputLabel>
-                        <Input
-                            id="username"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            label="Versicherungsnummer"
+                            variant="standard"
                             value={insurance}
                             onChange={(e) => setInsurance(e.target.value)}
+                            helperText="Insurance muss mindestens 10 Zeichen sein."
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">kvNummer</InputLabel>
-                        <Input id="username" aria-describedby="my-helper-text" value={kkv} onChange={(e) => setKkv(e.target.value)} />
+                        <TextField
+                            required
+                            label="Krankenkasse"
+                            variant="standard"
+                            value={kkv}
+                            onChange={(e) => setKkv(e.target.value)}
+                            helperText="Krankenkasse muss mindestens 8 Zeichen sein."
+                        />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">Geschlecht</InputLabel>
-                        <Input id="username" aria-describedby="my-helper-text" value={gender} onChange={(e) => setGender(e.target.value)} />
+                        <Autocomplete
+                            disableCloseOnSelect={false}
+                            value={gender}
+                            options={genderOption}
+                            onChange={(event, newValue) => {
+                                setGender(newValue);
+                            }}
+                            renderInput={(params) => <TextField {...params} label="Geschlecht" required variant="standard" />}
+                        />
                     </FormControl>
 
                     <FormControl margin="dense">
@@ -92,29 +106,27 @@ const NewPatient = () => {
                                 onChange={(newValue) => {
                                     setDate(newValue);
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={(params) => <TextField {...params} required variant="standard" />}
                             />
                         </LocalizationProvider>
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">Address</InputLabel>
-                        <Input
-                            id="username"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            label="Address"
+                            variant="standard"
                             value={address}
                             onChange={(e) => setAddress(e.target.value)}
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">PLZ</InputLabel>
-                        <Input id="username" aria-describedby="my-helper-text" value={zip} onChange={(e) => setZip(e.target.value)} />
+                        <TextField required label="PLZ" variant="standard" value={zip} onChange={(e) => setZip(e.target.value)} />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">Stadt</InputLabel>
-                        <Input id="username" aria-describedby="my-helper-text" value={city} onChange={(e) => setCity(e.target.value)} />
+                        <TextField required label="Stadt" variant="standard" value={city} onChange={(e) => setCity(e.target.value)} />
                     </FormControl>
 
                     <Button onClick={saveHandler} sx={{ marginTop: "2rem" }} variant="outlined">
