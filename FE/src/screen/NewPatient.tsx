@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Box, FormControl, FormLabel, Input, InputLabel, Button, TextField } from "@mui/material";
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import deLocale from "date-fns/locale/de";
 import DatePicker from "@mui/lab/DatePicker";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router";
+import { postPatient } from "../reducers/patients";
 
 const NewPatient = () => {
     const [firstname, setFirstname] = useState("");
@@ -24,9 +27,17 @@ const NewPatient = () => {
         de: "__.__.____",
     };
 
-    const saveHandler = () => {
-        console.log('save');
-    }
+    let dispatch = useDispatch();
+    const history = useHistory();
+    
+    const saveHandler =useCallback( () => {
+        const dateOfBirth = String(date);
+      dispatch(postPatient({firstname, lastname, insurance, kkv, gender, dateOfBirth, address, zip, city}));
+      history.push("/listpatients")
+    }, [firstname, lastname, insurance, kkv, gender, date, address, zip, city])
+
+
+
     return (
         <Box mt={10} sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <Box sx={{ width: "75%" }}>
