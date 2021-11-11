@@ -73,6 +73,17 @@ interface PutPatientPayLoad {
     zip?: string;
     city?: string;
 }
+interface PostPatientPayLoad {
+    insurance?: string;
+    kkv?: string;
+    firstname?: string;
+    lastname?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    address?: string;
+    zip?: string;
+    city?: string;
+}
 interface DeletePatientPayload {
     id:number;
 }
