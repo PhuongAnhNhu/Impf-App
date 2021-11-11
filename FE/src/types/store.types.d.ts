@@ -49,7 +49,7 @@ interface Patient {
     kkv: string;
     firstname: string;
     lastname: string;
-    dateofbirth: Date;
+    dateOfBirth: Date;
     gender: string;
     address: string;
     zip: string;
@@ -59,6 +59,33 @@ interface Patient {
 interface PatientsState {
     patients: Patient[];
     loading: boolean;
+}
+
+interface PutPatientPayLoad {
+    id: number;
+    insurance?: string;
+    kkv?: string;
+    firstname?: string;
+    lastname?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    address?: string;
+    zip?: string;
+    city?: string;
+}
+interface PostPatientPayLoad {
+    insurance?: string;
+    kkv?: string;
+    firstname?: string;
+    lastname?: string;
+    dateOfBirth?: string;
+    gender?: string;
+    address?: string;
+    zip?: string;
+    city?: string;
+}
+interface DeletePatientPayload {
+    id:number;
 }
 
 interface Appointment {
