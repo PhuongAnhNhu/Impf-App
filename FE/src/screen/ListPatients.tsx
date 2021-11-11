@@ -22,6 +22,7 @@ import { RootState } from "../store";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import { deletePatient } from "../reducers/patients";
+import EditPatient from "../component/EditPatient";
 
 const ListPatients = () => {
     const dispatch = useDispatch();
@@ -98,7 +99,7 @@ const ListPatients = () => {
                                             <p>{patient.gender} </p>
                                         </TableCell>
                                         <TableCell>
-                                            <p>{moment.utc(patient.dateOfBirth).format("DD-HH-YYYY")} </p>
+                                            <p>{moment.utc(patient.dateOfBirth).format("DD.MM.YYYY")} </p>
                                         </TableCell>
                                         <TableCell>
                                             <p>{`${patient.address}, ${patient.zip}, ${patient.city}`}</p>
@@ -123,8 +124,9 @@ const ListPatients = () => {
 
             {selectedId && (
                 <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
-                    {/* TODO: Edit Patient Dialog */}
-                    <DialogContent>{/* <EditUser id={selectedId} /> */}</DialogContent>
+                    <DialogContent>
+                        <EditPatient id={selectedId} />
+                    </DialogContent>
                 </Dialog>
             )}
         </Box>
