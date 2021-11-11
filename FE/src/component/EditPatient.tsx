@@ -5,7 +5,8 @@ import DatePicker from "@mui/lab/DatePicker";
 import { RootState } from "../store";
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import deLocale from 'date-fns/locale/de';
+import deLocale from "date-fns/locale/de";
+import { putPatient } from "../reducers/patients";
 
 interface EditPatientProps {
     id: number;
@@ -23,23 +24,23 @@ const EditPatient = ({ id }: EditPatientProps) => {
     const [insurance, setInsurance] = useState(patient.insurance);
     const [kkv, setKkv] = useState(patient.kkv);
     const [gender, setGender] = useState(patient.gender);
-    const [dateOfBirth, setDateOfBirth] = useState(patient.dateOfBirth);
+    const [date, setDate] = useState(patient.dateOfBirth);
     const [address, setAddress] = useState(patient.address);
     const [zip, setZip] = useState(patient.zip);
     const [city, setCity] = useState(patient.city);
 
     const saveHandler = () => {
-        // dispatch(putUser({id,username, password, isAdmin, firstname, lastname}))
+      const dateOfBirth = String(date);
+        dispatch(putPatient({ id, firstname, lastname, insurance, kkv, gender, dateOfBirth, address, zip, city }));
     };
 
     const localeMap = {
         de: deLocale,
-      };
-      
-      const maskMap = {
-        de: '__.__.____',
-      };
+    };
 
+    const maskMap = {
+        de: "__.__.____",
+    };
     return (
         <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
             <Box sx={{ width: "75%" }}>
@@ -87,13 +88,13 @@ const EditPatient = ({ id }: EditPatientProps) => {
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap['de']}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap["de"]}>
                             <DatePicker
-                                mask={maskMap['de']}
+                                mask={maskMap["de"]}
                                 label="Geburtsdatum"
-                                value={dateOfBirth}
+                                value={date}
                                 onChange={(newValue) => {
-                                    setDateOfBirth(newValue);
+                                    setDate(newValue);
                                 }}
                                 renderInput={(params) => <TextField {...params} />}
                             />
