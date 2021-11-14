@@ -105,10 +105,24 @@ interface VaccineDose {
     id: number;
     createAt: Date;
     expiresAt: Date;
-    vaccine: string;
+    vaccine: number;
 }
 
 interface VaccineDosesState {
     vaccineDoses: VaccineDose[];
+    loading: boolean;
+}
+
+interface Vaccine {
+    id: number;
+    name: string;
+    producer: string;
+    dosage: string;
+    approveAt: Date;
+}
+
+interface VaccineDosesState {
+    vaccineDoses: VaccineDose[];
+    vaccines: Vaccine[];
     loading: boolean;
 }
