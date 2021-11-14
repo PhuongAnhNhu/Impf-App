@@ -33,8 +33,8 @@ const ListImpfstoffe = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Id</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Dosierung</TableCell>
+                            {/* <TableCell>Name</TableCell>
+                            <TableCell>Dosierung</TableCell> */}
                             <TableCell>Herstellersdatum</TableCell>
                             <TableCell>Ablaufdatum</TableCell>
                         </TableRow>
@@ -45,8 +45,8 @@ const ListImpfstoffe = () => {
                             return (
                                 <TableRow hover key={vaccineDose.id}>
                                     <TableCell>{vaccineDose.vaccine}</TableCell>
-                                    <TableCell>{vaccine.name}</TableCell>
-                                    <TableCell>{vaccine.dosage}</TableCell>
+                                    {/* <TableCell>{vaccine.name}</TableCell> */}
+                                    {/* <TableCell>{vaccine.dosage}</TableCell> */}
                                     <TableCell>{moment.utc(vaccineDose.createAt).format("DD.MM.YYYY")}</TableCell>
                                     <TableCell>{moment.utc(vaccineDose.expiresAt).format("DD.MM.YYYY")}</TableCell>
                                 </TableRow>
