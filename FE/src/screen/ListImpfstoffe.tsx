@@ -32,12 +32,13 @@ const ListImpfstoffe = () => {
                     <TableHead>
                         <TableRow>
                             <TableCell>Id</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Dosierung</TableCell>
+                            {/* <TableCell>Name</TableCell>
+                            <TableCell>Dosierung</TableCell> */}
                             <TableCell>Herstellersdatum</TableCell>
                             <TableCell>Ablaufdatum</TableCell>
                         </TableRow>
                     </TableHead>
+
                     {vaccineDoses && vaccines && (
                         <TableBody>
                             {vaccineDoses.map((vaccineDose, index) => {
