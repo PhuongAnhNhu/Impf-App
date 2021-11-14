@@ -5,7 +5,7 @@ import user from '../dummydata/user';
 import DropDown from './DropDown';
 import { AppBar, Toolbar, Box, Button, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { logout } from '../reducers/users';
+import { getProfile, logout } from '../reducers/users';
 import { RootState } from '../store';
 
 const Navigation = () => {
@@ -19,10 +19,12 @@ const Navigation = () => {
     const usersState = useSelector((state: RootState) => state.usersState);
     const { loggedIn } = usersState;
 
+    const profile = useSelector((state:RootState) => state.usersState.profile); 
     useEffect(() => {
         if (!loggedIn) {
             history.push('/login');
         }
+        dispatch(getProfile());
     }, [loggedIn]);
 
     return (
@@ -55,14 +57,14 @@ const Navigation = () => {
                                 <Link to="/listimpfstoffe">Impfstoff</Link>
                             </Button>
 
-                            {user.admin && (
+                            {profile.isAdmin && (
                                 <Button color="inherit">
                                     <Link to="/listusers">Userlist</Link>
                                 </Button>
                             )}
                         </Box>
                         <Box>
-                            <DropDown name={user.name}>
+                            <DropDown name={`${profile.firstname} ${profile.lastname} `}>
                                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
                             </DropDown>
                         </Box>
