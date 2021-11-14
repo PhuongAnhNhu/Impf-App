@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import AddIcon from "@mui/icons-material/Add";
 import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button } from "@mui/material";
-// import impfstoffs from '../dummydata/impfstoff';
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getVaccineDoses, getVaccines } from "../reducers/vaccineDoses";
@@ -39,20 +38,22 @@ const ListImpfstoffe = () => {
                             <TableCell>Ablaufdatum</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {vaccineDoses.map((vaccineDose, index) => {
-                            const vaccine = vaccines.find((element) => vaccineDose.vaccine === element.id);
-                            return (
-                                <TableRow hover key={vaccineDose.id}>
-                                    <TableCell>{vaccineDose.vaccine}</TableCell>
-                                    <TableCell>{vaccine.name}</TableCell>
-                                    <TableCell>{vaccine.dosage}</TableCell>
-                                    <TableCell>{moment.utc(vaccineDose.createAt).format("DD.MM.YYYY")}</TableCell>
-                                    <TableCell>{moment.utc(vaccineDose.expiresAt).format("DD.MM.YYYY")}</TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
+                    {vaccineDoses && vaccines && (
+                        <TableBody>
+                            {vaccineDoses.map((vaccineDose, index) => {
+                                const vaccine = vaccines.find((element) => vaccineDose.vaccine === element.id);
+                                return (
+                                    <TableRow hover key={vaccineDose.id}>
+                                        <TableCell>{vaccineDose.vaccine}</TableCell>
+                                        <TableCell>{vaccine.name}</TableCell>
+                                        <TableCell>{vaccine.dosage}</TableCell>
+                                        <TableCell>{moment.utc(vaccineDose.createAt).format("DD.MM.YYYY")}</TableCell>
+                                        <TableCell>{moment.utc(vaccineDose.expiresAt).format("DD.MM.YYYY")}</TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    )}
                 </Table>
             </TableContainer>
             {/* TODO: edit dialog */}
