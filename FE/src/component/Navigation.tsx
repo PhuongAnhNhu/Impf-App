@@ -5,7 +5,8 @@ import user from '../dummydata/user';
 import DropDown from './DropDown';
 import { AppBar, Toolbar, Box, Button, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { getProfile, logout } from '../reducers/users';
+import { logout } from '../reducers/users';
+import { getProfile  } from '../reducers/profile';
 import { RootState } from '../store';
 
 const Navigation = () => {
@@ -19,7 +20,7 @@ const Navigation = () => {
     const usersState = useSelector((state: RootState) => state.usersState);
     const { loggedIn } = usersState;
 
-    const profile = useSelector((state:RootState) => state.usersState.profile); 
+    const profile = useSelector((state:RootState) => state.profileState.profile); 
     useEffect(() => {
         if (!loggedIn) {
             history.push('/login');

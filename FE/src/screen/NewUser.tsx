@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import {useHistory} from 'react-router'
+import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { Box, FormControl, FormLabel, Input, InputLabel, Button, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, FormControl, FormLabel, Input, InputLabel, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { postUser } from '../reducers/users';
 
 const NewUser = () => {
@@ -16,7 +16,7 @@ const NewUser = () => {
 
     const onSubmit = useCallback(() => {
         dispatch(postUser({ username, password, isAdmin, firstname, lastname }));
-        history.push("/listusers");
+        history.push('/listusers');
     }, [username, password, isAdmin, firstname, lastname]);
 
     return (
@@ -26,46 +26,50 @@ const NewUser = () => {
                     <FormLabel component="legend">Neuer Benutzer</FormLabel>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="Vorname">Vorname</InputLabel>
-                        <Input
-                            id="Vorname"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            variant="standard"
+                            label="Vorname"
                             value={firstname}
                             onChange={e => setFirstName(e.target.value)}
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="Nachname">Nachname</InputLabel>
-                        <Input
-                            id="Nachname"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            variant="standard"
+                            label="Nachname"
                             value={lastname}
                             onChange={e => setLastName(e.target.value)}
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="username">Username</InputLabel>
-                        <Input
-                            id="username"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            variant="standard"
+                            label="Username"
                             value={username}
                             onChange={e => setUsername(e.target.value)}
                         />
                     </FormControl>
 
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="password">Password</InputLabel>
-                        <Input
-                            id="password"
-                            aria-describedby="my-helper-text"
+                        <TextField
+                            required
+                            variant="standard"
+                            label="Password"
                             value={password}
                             onChange={e => setPassword(e.target.value)}
+                            helperText="Passwort muss mindestens 8 Zeichen sein."
                         />
                     </FormControl>
 
-                    <FormControlLabel control={<Checkbox checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)} name="gilad" />} label="Admin" />
+                    <FormControlLabel
+                        control={<Checkbox checked={isAdmin} onChange={e => setIsAdmin(e.target.checked)} name="gilad" />}
+                        label="Admin"
+                    />
 
                     <Button onClick={onSubmit} sx={{ marginTop: '2rem' }} variant="outlined">
                         Speichern
