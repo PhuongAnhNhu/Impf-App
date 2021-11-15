@@ -104,11 +104,7 @@ export const usersSlice = createSlice({
 
         //logout
         [logout.fulfilled.type]: (state) => {
-            return {
-                ...state,
-                loggedIn: false,
-                loading: false,
-            };
+            return initialState;
         },
         [logout.rejected.type]: (state) => {
             return {

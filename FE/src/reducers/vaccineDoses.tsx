@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import _ from "lodash";
 
 const initialState: VaccineDosesState = { vaccineDoses: [], vaccines: [], loading: false };
 
@@ -8,12 +9,21 @@ export const getVaccineDoses = createAsyncThunk("vaccineDoses/getVaccineDoses", 
     const response = await axios.get("/api/vaccine_doses");
     return response.data.collection;
 });
-
+//PUT vaccindose
+export const putVaccineDose = createAsyncThunk("vaccineDoses/putVaccineDose", async (payload: PutVaccineDosePayload, thunkAPI) => {
+    const id = payload.id;
+    const dataPayload = _.omit(payload, ["id"]);
+    const response = await axios.put(`/api/vaccine_doses/${id}`,dataPayload);
+    thunkAPI.dispatch(getVaccineDoses())
+    return response.data;
+});
 //GET vaccines
 export const getVaccines = createAsyncThunk("vaccines/getVaccines", async () => {
     const response = await axios.get("/api/vaccines");
     return response.data.collection;
 });
+
+
 
 export const vaccineDosesSlice = createSlice({
     name: "vaccineDoses",
@@ -56,6 +66,26 @@ export const vaccineDosesSlice = createSlice({
             };
         },
         [getVaccines.pending.type]: (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //putVaccineDose
+        [putVaccineDose.fulfilled.type]: (state, action) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [putVaccineDose.rejected.type]: (state) => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+        [putVaccineDose.pending.type]: (state) => {
             return {
                 ...state,
                 loading: true,
