@@ -4,20 +4,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 const initialState: UsersState = {
     users: [],
     loading: false,
-    loggedIn: false,
 };
 
-//Login
-export const login = createAsyncThunk('users/login', async (payload: LoginPayload, thunkAPI) => {
-    const response = await axios.post('/login', payload);
-    return response.data;
-});
-
-//Logout
-export const logout = createAsyncThunk('users/logout', async () => {
-    const response = await axios.post('/logout');
-    return response.data;
-});
 
 //GET USERS : /api/users
 export const getUserList = createAsyncThunk('users/getUserList', async () => {
@@ -51,51 +39,6 @@ export const usersSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: {
-        //login
-        [login.fulfilled.type]: state => {
-            return {
-                ...state,
-                loggedIn: true,
-                loading: false,
-            };
-        },
-
-        [login.rejected.type]: state => {
-            return {
-                ...state,
-                loggedIn: false,
-                loading: false,
-            };
-        },
-        [login.pending.type]: state => {
-            return {
-                ...state,
-                loading: true,
-            };
-        },
-
-        //logout
-        [logout.fulfilled.type]: state => {
-            return {
-                ...state,
-                loggedIn: false,
-                loading: false,
-            };
-        },
-        [logout.rejected.type]: state => {
-            return {
-                ...state,
-                loggedIn: false,
-                loading: true,
-            };
-        },
-        [logout.pending.type]: state => {
-            return {
-                ...state,
-                loading: true,
-            };
-        },
-
         //getuserlist
         [getUserList.fulfilled.type]: (state, action) => {
             return {

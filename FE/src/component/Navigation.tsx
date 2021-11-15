@@ -1,36 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import user from '../dummydata/user';
 import DropDown from './DropDown';
 import { AppBar, Toolbar, Box, Button, MenuItem } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { logout } from '../reducers/users';
-import { getProfile  } from '../reducers/profile';
+import { logout } from '../reducers/profile';
 import { RootState } from '../store';
 
 const Navigation = () => {
     const dispatch = useDispatch();
-    let history = useHistory();
 
     const logoutHandler = () => {
         dispatch(logout());
     };
 
-    const usersState = useSelector((state: RootState) => state.usersState);
-    const { loggedIn } = usersState;
-
     const profile = useSelector((state:RootState) => state.profileState.profile); 
-    useEffect(() => {
-        if (!loggedIn) {
-            history.push('/login');
-        }
-        dispatch(getProfile());
-    }, [loggedIn]);
+    const isLoggedIn = useSelector((state: RootState) => state.profileState.isLoggedIn);
+    
+    if (!isLoggedIn) {
+        return <></>;
+    }
 
     return (
         <Box>
-            {loggedIn && (
                 <AppBar color="inherit">
                     <Toolbar>
                         <Box sx={{ flexGrow: 1 }}>
@@ -71,7 +62,7 @@ const Navigation = () => {
                         </Box>
                     </Toolbar>
                 </AppBar>
-            )}
+            
         </Box>
     );
 };
