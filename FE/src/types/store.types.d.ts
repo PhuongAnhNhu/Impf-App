@@ -9,7 +9,6 @@ interface User {
 interface UsersState {
     users: User[];
     loading: boolean;
-    loggedIn: boolean;
 }
 
 interface LoginPayload {
@@ -131,10 +130,12 @@ interface Profile {
     username: string;
     firstname: string;
     lastname: string;
-    isAdmin: Boolean
+    isAdmin: Boolean;
 }
 
 interface ProfileState {
     profile: Profile;
-    loading: boolean
+    isLoggedIn:boolean;
+    loading: boolean;
+    initialLoaded:boolean;
 }
