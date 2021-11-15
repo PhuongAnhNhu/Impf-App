@@ -5,15 +5,9 @@ interface User {
     lastname: string;
     isAdmin: number;
 }
-interface Profile {
-    username: string;
-    firstname: string;
-    lastname: string;
-    isAdmin: Boolean
-}
+
 interface UsersState {
     users: User[];
-    profile: Profile;
     loading: boolean;
     loggedIn: boolean;
 }
@@ -133,4 +127,14 @@ interface VaccineDosesState {
     loading: boolean;
 }
 
+interface Profile {
+    username: string;
+    firstname: string;
+    lastname: string;
+    isAdmin: Boolean
+}
 
+interface ProfileState {
+    profile: Profile;
+    loading: boolean
+}
