@@ -18,7 +18,7 @@ export const putVaccineDose = createAsyncThunk("vaccineDoses/putVaccineDose", as
     return response.data;
 });
 //GET vaccines
-export const getVaccines = createAsyncThunk("vaccines/getVaccines", async () => {
+export const getVaccines = createAsyncThunk("vaccines/getVaccines", async (thunkAPI) => {
     const response = await axios.get("/api/vaccines");
     return response.data.collection;
 });
