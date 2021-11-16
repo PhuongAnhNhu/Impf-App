@@ -21,12 +21,13 @@ import { CircularProgress } from '@mui/material';
 function App() {
     const dispatch = useDispatch();
     const initialLoaded = useSelector((state: RootState) => state.profileState.initialLoaded);
+    const loading = useSelector((state: RootState) => state.profileState.loading);
 
     useEffect(() => {
         dispatch(getProfile());
     }, []);
     
-    if (!initialLoaded) {
+    if (!initialLoaded && loading) {
         return <CircularProgress size={40} />;
     }
     return (
