@@ -30,8 +30,6 @@ const ListAppointment = () => {
         dispatch(getAppointments());
     }, []);
 
-    console.log(appointments);
-
     return (
         <Box mr={2} mt={10}>
             <h2>Terminliste</h2>

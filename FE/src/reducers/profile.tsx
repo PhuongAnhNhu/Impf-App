@@ -11,6 +11,7 @@ const initialState: ProfileState = {
 //Login
 export const login = createAsyncThunk('users/login', async (payload: LoginPayload, thunkAPI) => {
     const response = await axios.post('/login', payload);
+    thunkAPI.dispatch(getProfile());
     return response.data;
 });
 
