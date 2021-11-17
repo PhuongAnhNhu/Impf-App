@@ -100,6 +100,7 @@ interface AppointmentsState {
     loading: boolean;
 }
 
+//Vaccine Dose
 interface VaccineDose {
     id: number;
     createdAt: Date;
@@ -115,9 +116,16 @@ interface VaccineDosesState {
 
 interface PutVaccineDosePayload {
     id:number;
-    createdAt: Date;
-    expiresAt: Date
+    createdAt: string;
+    expiresAt: string
 }
+
+interface PostVaccineDosePayload {
+    createdAt: string;
+    expiresAt: string;
+    vaccine: number;
+}
+//Vaccine
 interface Vaccine {
     id: number;
     name: string;
@@ -125,9 +133,7 @@ interface Vaccine {
     dosage: string;
     approveAt: Date;
 }
-
-interface VaccineDosesState {
-    vaccineDoses: VaccineDose[];
+interface VaccinesState {
     vaccines: Vaccine[];
     loading: boolean;
 }

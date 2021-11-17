@@ -1,55 +1,90 @@
-import React from "react";
-import { Box, FormControl, FormLabel, Input, InputLabel, Button, TextField } from "@mui/material";
-import DatePicker from "@mui/lab/DatePicker";
-import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import React, { useCallback, useEffect, useState } from 'react';
+import { Box, FormControl, FormLabel, Button, TextField, Autocomplete } from '@mui/material';
+import DatePicker from '@mui/lab/DatePicker';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import deLocale from 'date-fns/locale/de';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { postVaccineDose } from '../reducers/vaccineDoses';
+import { useHistory } from 'react-router';
+import { getVaccines } from '../reducers/vaccines';
 
 const Impfstopff = () => {
-    const [herstellsdatum, setHerstellsdatum] = React.useState<Date | null>(new Date());
-    const [euZulassung, setEuZulassung] = React.useState<Date | null>(new Date());
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+    const [vaccineType, setVaccineType] = useState<String>('1');
+    const [createdAt, setcreatedAt] = useState(`${new Date()}`);
+    const [expiresAt, setExpiresAt] = useState(`${new Date()}`);
+
+    const vaccines: Vaccine[] = useSelector((state: RootState) => state.vaccinesState.vaccines);
+    const vaccinesType = vaccines.map(item => String(item.id));
+console.log(vaccinesType);
+    const localeMap = {
+        de: deLocale,
+    };
+
+    const maskMap = {
+        de: '__.__.____',
+    };
+
+    const onSubmit = useCallback(() => {
+        const vaccine = Number(vaccineType);
+        dispatch(postVaccineDose({ vaccine, createdAt, expiresAt }));
+        history.push('/listimpfstoffe');
+    }, [vaccineType, createdAt, expiresAt]);
+
+    useEffect(() => {
+        dispatch(getVaccines());
+    }, [])
+
     return (
-        <Box sx={{ display: "flex", flexDirection: "row", justifyContent: "center"}}>
-            <Box sx={{ width: "75%" }}>
+        <Box mt={10} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+            <Box sx={{ width: '75%' }}>
                 <FormControl fullWidth margin="normal">
                     <FormLabel component="legend">Impfstoffe</FormLabel>
-                    {/* TODO: Autocomplete if have time */}
+
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="Vorname">Bezeichnung</InputLabel>
-                        <Input id="Vorname" aria-describedby="my-helper-text" />
+                        <Autocomplete
+                            disableCloseOnSelect={false}
+                            value={vaccineType}
+                            options={vaccinesType}
+                            onChange={(e, newValue) => {
+                                setVaccineType(newValue);
+                            }}
+                            renderInput={params => <TextField {...params} label="Vaccine" required variant="standard" />}
+                        />
                     </FormControl>
                     <FormControl margin="dense">
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap['de']}>
                             <DatePicker
+                                mask={maskMap['de']}
                                 label="Herstellsdatum"
-                                value={herstellsdatum}
-                                onChange={(newValue) => {
-                                    setHerstellsdatum(newValue);
+                                value={createdAt}
+                                onChange={newValue => {
+                                    setcreatedAt(newValue);
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={params => <TextField {...params} />}
                             />
                         </LocalizationProvider>
                     </FormControl>
+
                     <FormControl margin="dense">
-                        <InputLabel htmlFor="Versicherungsnummer">Dosierung</InputLabel>
-                        <Input id="Versicherungsnummer" aria-describedby="my-helper-text" />
-                    </FormControl>
-                    <FormControl margin="dense">
-                        <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap['de']}>
                             <DatePicker
-                                label="EU Zulassungsdatum"
-                                value={euZulassung}
-                                onChange={(newValue) => {
-                                    setEuZulassung(newValue);
+                                mask={maskMap['de']}
+                                label="Ablaufdattum"
+                                value={expiresAt}
+                                onChange={newValue => {
+                                    setExpiresAt(newValue);
                                 }}
-                                renderInput={(params) => <TextField {...params} />}
+                                renderInput={params => <TextField {...params} />}
                             />
                         </LocalizationProvider>
                     </FormControl>
-                    <FormControl margin="dense">
-                        <InputLabel htmlFor="Vorname">Menge</InputLabel>
-                        <Input id="Vorname" aria-describedby="my-helper-text" />
-                    </FormControl>
-                    <Button sx={{ marginTop: "2rem" }} variant="outlined">
+
+                    <Button sx={{ marginTop: '2rem' }} variant="outlined" onClick={onSubmit}>
                         Speichern
                     </Button>
                 </FormControl>

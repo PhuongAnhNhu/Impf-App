@@ -1,6 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getVaccines } from './vaccineDoses';
+import { getVaccines } from './vaccines';
 
 const initialState: ProfileState = {
     profile: { username: "", firstname: "", lastname: "", isAdmin: false },

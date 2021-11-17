@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, FormControl, FormLabel, Input, InputLabel, Button, TextField } from '@mui/material';
+import { Box, FormControl, FormLabel, Button, TextField } from '@mui/material';
 import { RootState } from '../store';
 import DatePicker from '@mui/lab/DatePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
@@ -15,11 +15,11 @@ const EditVaccineDose = ({ id }: EditVaccineProps) => {
     const vaccineDoses = useSelector((state: RootState) => state.vaccineDosesState.vaccineDoses);
 
     const vaccineDose = vaccineDoses.find(element => id === element.id);
-console.log(vaccineDose)
+console.log(vaccineDose);
     const dispatch = useDispatch();
 
-    const [createdAt, setCreatedAt] = useState(vaccineDose.createdAt);
-    const [expiresAt, setExpiresAt] = useState(vaccineDose.expiresAt);
+    const [createdAt, setCreatedAt] = useState(`${vaccineDose.createdAt}`);
+    const [expiresAt, setExpiresAt] = useState(`${vaccineDose.expiresAt}`);
 
     const saveHandler = () => {
         dispatch(putVaccineDose({ id, createdAt, expiresAt }));
@@ -29,7 +29,7 @@ console.log(vaccineDose)
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
             <Box sx={{ width: '75%' }}>
                 <FormControl fullWidth margin="normal">
-                    <FormLabel component="legend">Bearbeiten Impfstoff</FormLabel>
+                    <FormLabel component="legend">Bearbeiten Impfstoff {id}</FormLabel>
 
                     <FormControl margin="dense">
                         <LocalizationProvider dateAdapter={AdapterDateFns}>

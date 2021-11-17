@@ -3,6 +3,7 @@ import usersReducer from './reducers/users';
 import patientsReducer from './reducers/patients';
 import appointmentsReducer from './reducers/appointments';
 import vaccineDosesReducer from './reducers/vaccineDoses';
+import vaccinesReducer from './reducers/vaccines';
 import profileReducer from './reducers/profile';
 
 export const store = configureStore({
@@ -11,7 +12,8 @@ export const store = configureStore({
         patientsState: patientsReducer,
         appointmentsState: appointmentsReducer,
         vaccineDosesState: vaccineDosesReducer,
-        profileState: profileReducer
+        vaccinesState: vaccinesReducer,
+        profileState: profileReducer,
     },
 });
 
