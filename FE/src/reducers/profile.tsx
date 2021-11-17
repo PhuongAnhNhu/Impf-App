@@ -1,5 +1,6 @@
 import axios from "axios";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getVaccines } from './vaccines';
 
 const initialState: ProfileState = {
     profile: { username: "", firstname: "", lastname: "", isAdmin: false },
@@ -12,6 +13,7 @@ const initialState: ProfileState = {
 export const login = createAsyncThunk('users/login', async (payload: LoginPayload, thunkAPI) => {
     const response = await axios.post('/login', payload);
     thunkAPI.dispatch(getProfile());
+    thunkAPI.dispatch(getVaccines());
     return response.data;
 });
 

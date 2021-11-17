@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
-import { Box, FormControl, FormLabel, Input, InputLabel, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import { Box, FormControl, FormLabel, Button, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { postUser } from '../reducers/users';
 
 const NewUser = () => {

@@ -1,22 +1,39 @@
-import axios from "axios";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import _ from 'lodash';
+import moment from 'moment';
 
-const initialState: VaccineDosesState = { vaccineDoses: [], vaccines: [], loading: false };
+const initialState: VaccineDosesState = { vaccineDoses: [], loading: false };
 
 //GET vaccindoses
-export const getVaccineDoses = createAsyncThunk("vaccineDoses/getVaccineDoses", async () => {
-    const response = await axios.get("/api/vaccine_doses");
+export const getVaccineDoses = createAsyncThunk('vaccineDoses/getVaccineDoses', async () => {
+    const response = await axios.get('/api/vaccine_doses');
     return response.data.collection;
 });
 
-//GET vaccines
-export const getVaccines = createAsyncThunk("vaccines/getVaccines", async () => {
-    const response = await axios.get("/api/vaccines");
-    return response.data.collection;
+//POST vaccindose
+export const postVaccineDose = createAsyncThunk('vaccineDoses/postVaccineDose', async (payload: PostVaccineDosePayload, thunkAPI) => {
+    payload.createdAt = moment.utc(payload.createdAt).format('YYYY-MM-DD HH:mm:ss');
+    payload.expiresAt = moment.utc(payload.expiresAt).format('YYYY-MM-DD HH:mm:ss');
+    const response = await axios.post(`/api/vaccine_doses`, payload);
+    thunkAPI.dispatch(getVaccineDoses());
+    return response.data;
+});
+
+//PUT vaccindose
+export const putVaccineDose = createAsyncThunk('vaccineDoses/putVaccineDose', async (payload: PutVaccineDosePayload, thunkAPI) => {
+    const id = payload.id;
+    payload.createdAt = moment.utc(payload.createdAt).format('YYYY-MM-DD HH:mm:ss');
+    payload.expiresAt = moment.utc(payload.expiresAt).format('YYYY-MM-DD HH:mm:ss');
+    const dataPayload = _.omit(payload, ['id']);
+    console.log(dataPayload);
+    const response = await axios.put(`/api/vaccine_doses/${id}`, dataPayload);
+    thunkAPI.dispatch(getVaccineDoses());
+    return response.data;
 });
 
 export const vaccineDosesSlice = createSlice({
-    name: "vaccineDoses",
+    name: 'vaccineDoses',
     initialState,
     reducers: {},
     extraReducers: {
@@ -28,34 +45,53 @@ export const vaccineDosesSlice = createSlice({
                 vaccineDoses: action.payload,
             };
         },
-        [getVaccineDoses.rejected.type]: (state) => {
+        [getVaccineDoses.rejected.type]: state => {
             return {
                 ...state,
-                loading: true,
+                loading: false,
             };
         },
-        [getVaccineDoses.pending.type]: (state) => {
+        [getVaccineDoses.pending.type]: state => {
             return {
                 ...state,
                 loading: true,
             };
         },
 
-        //getvaccindoses
-        [getVaccines.fulfilled.type]: (state, action) => {
+        //postVaccineDose
+        [postVaccineDose.fulfilled.type]: (state, action) => {
             return {
                 ...state,
                 loading: false,
-                vaccines: action.payload,
             };
         },
-        [getVaccines.rejected.type]: (state) => {
+        [postVaccineDose.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [postVaccineDose.pending.type]: state => {
             return {
                 ...state,
                 loading: true,
             };
         },
-        [getVaccines.pending.type]: (state) => {
+
+        //putVaccineDose
+        [putVaccineDose.fulfilled.type]: (state, action) => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [putVaccineDose.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [putVaccineDose.pending.type]: state => {
             return {
                 ...state,
                 loading: true,
