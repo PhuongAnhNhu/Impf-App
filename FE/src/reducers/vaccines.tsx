@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState: VaccinesState = { vaccines: [], loading: false}
+const initialState: VaccinesState = { vaccines: [], loading: false };
 
 //GET vaccines
-export const getVaccines = createAsyncThunk('vaccines/getVaccines', async thunkAPI => {
-    const response = await axios.get('/api/vaccines');
-    console.log(response.data.collection);
+export const getVaccines = createAsyncThunk('vaccines/getVaccines', async () => {
+    const response: AxiosResponse = await new Promise(resolve => {
+        setTimeout(() => axios.get('/api/vaccines').then(response => resolve(response)), 500);
+    });
     return response.data.collection;
 });
 

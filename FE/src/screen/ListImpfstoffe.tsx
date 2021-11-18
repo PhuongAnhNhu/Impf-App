@@ -21,6 +21,7 @@ import { getVaccineDoses } from '../reducers/vaccineDoses';
 import { RootState } from '../store';
 import CreateIcon from '@mui/icons-material/Create';
 import EditVaccineDose from '../component/EditVaccineDose';
+import { getVaccines } from '../reducers/vaccines';
 
 const ListImpfstoffe = () => {
     const dispatch = useDispatch();
@@ -28,6 +29,9 @@ const ListImpfstoffe = () => {
     const loading = useSelector((state: RootState) => state.vaccineDosesState.loading);
 
     const vaccineDoses: VaccineDose[] = useSelector((state: RootState) => state.vaccineDosesState.vaccineDoses);
+    const vaccines: Vaccine[] = useSelector((state: RootState) => state.vaccinesState.vaccines);
+
+
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
     const handleClickOpen = (id: number) => {
@@ -40,6 +44,7 @@ const ListImpfstoffe = () => {
 
     useEffect(() => {
         dispatch(getVaccineDoses());
+        dispatch(getVaccines())
     }, []);
 
     return (
@@ -53,14 +58,14 @@ const ListImpfstoffe = () => {
 
             {loading && <CircularProgress size={40} />}
 
-            {!!vaccineDoses.length &&  (
+            {!!vaccineDoses.length && !!vaccines.length && (
                 <TableContainer component={Paper}>
                     <Table size="small" aria-label="a dense table">
                         <TableHead>
                             <TableRow>
                                 <TableCell>Id</TableCell>
-                                {/* <TableCell>Name</TableCell>
-                                <TableCell>Dosierung</TableCell> */}
+                                <TableCell>Name</TableCell>
+                                <TableCell>Dosierung</TableCell>
                                 <TableCell>Herstellersdatum</TableCell>
                                 <TableCell>Ablaufdatum</TableCell>
                                 <TableCell></TableCell>
@@ -69,11 +74,12 @@ const ListImpfstoffe = () => {
 
                         <TableBody>
                             {vaccineDoses.map((vaccineDose, index) => {
+                                const vaccine = vaccines.find(item => vaccineDose.vaccine === item.id )
                                 return (
                                     <TableRow hover key={vaccineDose.id}>
                                         <TableCell>{vaccineDose.id}</TableCell>
-                                        {/* <TableCell>{vaccine.name}</TableCell>
-                                        <TableCell>{vaccine.dosage}</TableCell> */}
+                                        <TableCell>{vaccine.name}</TableCell>
+                                        <TableCell>{vaccine.dosage}</TableCell>
                                         <TableCell>{moment.utc(vaccineDose.createdAt).format('DD.MM.YYYY')}</TableCell>
                                         <TableCell>{moment.utc(vaccineDose.expiresAt).format('DD.MM.YYYY')}</TableCell>
                                         <TableCell>

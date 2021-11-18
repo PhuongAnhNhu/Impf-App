@@ -8,13 +8,14 @@ import { getAppointments } from '../reducers/appointments';
 import { RootState } from '../store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import moment from 'moment';
+import { getPatients } from '../reducers/patients';
 
 const ListAppointment = () => {
     const dispatch = useDispatch();
 
     const appointments: Appointment[] = useSelector((state: RootState) => state.appointmentsState.appointments);
-    // const patients: Patient[] = useSelector((state: RootState) => state.patientsState.patients);
-    //TODO: Find Patient nach Id
+    const patients: Patient[] = useSelector((state: RootState) => state.patientsState.patients);
 
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -28,6 +29,7 @@ const ListAppointment = () => {
 
     useEffect(() => {
         dispatch(getAppointments());
+        dispatch(getPatients());
     }, []);
 
     return (
@@ -43,45 +45,47 @@ const ListAppointment = () => {
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell></TableCell>
+                            <TableCell>ID</TableCell>
                             <TableCell>Vorname</TableCell>
                             <TableCell>Nachname</TableCell>
                             <TableCell>Verischerungsnummer</TableCell>
                             <TableCell>Datum</TableCell>
                             <TableCell>Uhrzeit</TableCell>
-                            <TableCell>Arzt</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>Bearbeiten</TableCell>
+                            <TableCell>Löschen</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {appointments.map((appointment, index) => {
-                            return (
-                                <TableRow hover key={appointment.id}>
-                                    <TableCell>{index + 1}</TableCell>
-                                    {/* TODO: Name von Patient anziegen */}
-                                    <TableCell>{appointment.id}</TableCell>
-                                    <TableCell>{appointment.id}</TableCell>
-                                    <TableCell>{appointment.patient}</TableCell>
-                                    <TableCell>{appointment.date}</TableCell>
-                                    <TableCell>{appointment.date}</TableCell>
-                                    {/* <TableCell>{moment.unix(Number(appointment.datum)).format('DD-MM-YYYY')}</TableCell> */}
-                                    {/* <TableCell>{moment.unix(Number(appointment.datum)).format('HH:mm')}</TableCell> */}
-                                    {/* <TableCell>{appointment.arzt}</TableCell> */}
-                                    <TableCell>
-                                        <Button onClick={e => handleClickOpen(appointment.id)}>
-                                            <CreateIcon />
-                                        </Button>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button>
-                                            <DeleteIcon />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
+
+                    {!!appointments.length && !!patients.length && (
+                        <TableBody>
+                            {appointments.map((appointment, index) => {
+                                const patient: Patient = patients.find(element => Number(appointment.patient) === element.id);
+
+                                return (
+                                    <TableRow hover key={appointment.id}>
+                                        <TableCell>{index + 1}</TableCell>
+                                        {/* TODO: Name von Patient anziegen */}
+                                        <TableCell>{patient.firstname}</TableCell>
+                                        <TableCell>{patient.lastname}</TableCell>
+                                        <TableCell>{patient.insurance}</TableCell>
+                                        <TableCell>{moment.utc(appointment.date).format('DD-MM-YYYY')}</TableCell>
+                                        <TableCell>{moment.utc(appointment.date).format('HH:mm')}</TableCell>
+                                        {/* <TableCell>{appointment.arzt}</TableCell> */}
+                                        <TableCell>
+                                            <Button onClick={e => handleClickOpen(appointment.id)}>
+                                                <CreateIcon />
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button>
+                                                <DeleteIcon />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    )}
                 </Table>
             </TableContainer>
 
