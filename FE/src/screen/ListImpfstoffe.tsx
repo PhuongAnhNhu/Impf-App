@@ -13,11 +13,11 @@ import {
     Button,
     CircularProgress,
     DialogContent,
-    Dialog
+    Dialog,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getVaccineDoses } from '../reducers/vaccineDoses';
+import { getVaccindosesNotAssigned } from '../reducers/vaccineDoses';
 import { RootState } from '../store';
 import CreateIcon from '@mui/icons-material/Create';
 import EditVaccineDose from '../component/EditVaccineDose';
@@ -28,9 +28,9 @@ const ListImpfstoffe = () => {
 
     const loading = useSelector((state: RootState) => state.vaccineDosesState.loading);
 
-    const vaccineDoses: VaccineDose[] = useSelector((state: RootState) => state.vaccineDosesState.vaccineDoses);
+    // const vaccineDoses: VaccineDose[] = useSelector((state: RootState) => state.vaccineDosesState.vaccineDoses);
+    const vaccineDoses: VaccineDose[] = useSelector((state: RootState) => state.vaccineDosesState.vaccineDosesNotAssigned);
     const vaccines: Vaccine[] = useSelector((state: RootState) => state.vaccinesState.vaccines);
-
 
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -43,8 +43,8 @@ const ListImpfstoffe = () => {
     };
 
     useEffect(() => {
-        dispatch(getVaccineDoses());
-        dispatch(getVaccines())
+        dispatch(getVaccindosesNotAssigned());
+        dispatch(getVaccines());
     }, []);
 
     return (
@@ -74,7 +74,7 @@ const ListImpfstoffe = () => {
 
                         <TableBody>
                             {vaccineDoses.map((vaccineDose, index) => {
-                                const vaccine = vaccines.find(item => vaccineDose.vaccine === item.id )
+                                const vaccine = vaccines.find(item => vaccineDose.vaccine === item.id);
                                 return (
                                     <TableRow hover key={vaccineDose.id}>
                                         <TableCell>{vaccineDose.id}</TableCell>

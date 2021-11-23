@@ -7,7 +7,6 @@ const initialState: PatientsState = { patients: [], loading: false };
 
 //GET patients
 export const getPatients = createAsyncThunk('patients/getPatients', async () => {
-    
     const response: AxiosResponse = await new Promise(resolve => {
         setTimeout(() => axios.get('/api/patients').then(response => resolve(response)), 500);
     });

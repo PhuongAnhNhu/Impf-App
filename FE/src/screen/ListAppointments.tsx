@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import moment from 'moment';
 import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Dialog, DialogContent } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
@@ -64,13 +63,11 @@ const ListAppointment = () => {
                                 return (
                                     <TableRow hover key={appointment.id}>
                                         <TableCell>{index + 1}</TableCell>
-                                        {/* TODO: Name von Patient anziegen */}
                                         <TableCell>{patient.firstname}</TableCell>
                                         <TableCell>{patient.lastname}</TableCell>
                                         <TableCell>{patient.insurance}</TableCell>
                                         <TableCell>{moment.utc(appointment.date).format('DD-MM-YYYY')}</TableCell>
                                         <TableCell>{moment.utc(appointment.date).format('HH:mm')}</TableCell>
-                                        {/* <TableCell>{appointment.arzt}</TableCell> */}
                                         <TableCell>
                                             <Button onClick={e => handleClickOpen(appointment.id)}>
                                                 <CreateIcon />
