@@ -40,10 +40,9 @@ const Appointment = () => {
 
     const vaccineDoses: VaccineDose[] = useSelector((state: RootState) => state.vaccineDosesState.vaccineDosesNotAssigned);
 
-    // Vaccine_Doses filter nach Impftermin 
-    const vaccineDosesNachDatum = vaccineDoses
-    .filter(e => moment.utc(value).format() <= moment.utc(e.expiresAt).format())
-    
+    // Vaccine_Doses filter nach Impftermin
+    const vaccineDosesNachDatum = vaccineDoses.filter(e => moment.utc(value).format() <= moment.utc(e.expiresAt).format());
+
     let vaccineDosesList = vaccineDosesNachDatum.map(item => String(item.id));
 
     if (vaccineType !== '') {
@@ -53,6 +52,16 @@ const Appointment = () => {
         const vaccineListNachVaccineType = vaccineDosesNachDatum.filter(e => e.vaccine === vaccinesFilterID.id);
         vaccineDosesList = vaccineListNachVaccineType.map(item => String(item.id));
     }
+
+    const onSubmit = useCallback(() => {
+        const date = moment.utc(value).format('YYYY-MM-DD HH:mm:ss');
+        const vaccine_dose = Number(vaccine);
+        const patient = patients.find(e => e.insurance === insurance).id;
+        //TODO: get profile gibt kein user id zurück
+        const user = 1;
+        dispatch(postAppointment({ date, vaccine_dose, patient, user }));
+        history.push('/appointments');
+    }, [value, vaccine, insurance]);
 
     useEffect(() => {
         dispatch(getPatients());
@@ -128,7 +137,7 @@ const Appointment = () => {
                                 renderInput={params => <TextField {...params} label="Impfstoff" required variant="standard" />}
                             />
                         </FormControl>
-                        <Button sx={{ marginTop: '2rem' }} variant="outlined">
+                        <Button onClick={onSubmit} sx={{ marginTop: '2rem' }} variant="outlined">
                             Speichern
                         </Button>
                     </FormControl>
