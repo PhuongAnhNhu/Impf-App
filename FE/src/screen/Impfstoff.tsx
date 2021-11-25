@@ -20,7 +20,7 @@ const Impfstopff = () => {
 
     const vaccines: Vaccine[] = useSelector((state: RootState) => state.vaccinesState.vaccines);
     const vaccinesType = vaccines.map(item => String(item.id));
-console.log(vaccinesType);
+    
     const localeMap = {
         de: deLocale,
     };

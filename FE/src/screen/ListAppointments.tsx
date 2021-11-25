@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-// import moment from 'moment';
 import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Dialog, DialogContent } from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAppointments } from '../reducers/appointments';
+import { deleteAppointment, getAppointments } from '../reducers/appointments';
 import { RootState } from '../store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
+import moment from 'moment';
+import { getPatients } from '../reducers/patients';
+import EditAppointment from '../component/EditAppointment';
 
 const ListAppointment = () => {
     const dispatch = useDispatch();
 
     const appointments: Appointment[] = useSelector((state: RootState) => state.appointmentsState.appointments);
-    // const patients: Patient[] = useSelector((state: RootState) => state.patientsState.patients);
-    //TODO: Find Patient nach Id
+    const patients: Patient[] = useSelector((state: RootState) => state.patientsState.patients);
 
     const [selectedId, setSelectedId] = useState<number | null>(null);
 
@@ -26,8 +27,13 @@ const ListAppointment = () => {
         setSelectedId(null);
     };
 
+    const deleteHandler = (id: number) => {
+        dispatch(deleteAppointment({ id }));
+    };
+
     useEffect(() => {
         dispatch(getAppointments());
+        dispatch(getPatients());
     }, []);
 
     return (
@@ -43,52 +49,55 @@ const ListAppointment = () => {
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell></TableCell>
+                            <TableCell>ID</TableCell>
                             <TableCell>Vorname</TableCell>
                             <TableCell>Nachname</TableCell>
                             <TableCell>Verischerungsnummer</TableCell>
+                            <TableCell>Vaccine</TableCell>
                             <TableCell>Datum</TableCell>
                             <TableCell>Uhrzeit</TableCell>
-                            <TableCell>Arzt</TableCell>
-                            <TableCell></TableCell>
-                            <TableCell></TableCell>
+                            <TableCell>Bearbeiten</TableCell>
+                            <TableCell>Löschen</TableCell>
                         </TableRow>
                     </TableHead>
-                    <TableBody>
-                        {appointments.map((appointment, index) => {
-                            return (
-                                <TableRow hover key={appointment.id}>
-                                    <TableCell>{index + 1}</TableCell>
-                                    {/* TODO: Name von Patient anziegen */}
-                                    <TableCell>{appointment.id}</TableCell>
-                                    <TableCell>{appointment.id}</TableCell>
-                                    <TableCell>{appointment.patient}</TableCell>
-                                    <TableCell>{appointment.date}</TableCell>
-                                    <TableCell>{appointment.date}</TableCell>
-                                    {/* <TableCell>{moment.unix(Number(appointment.datum)).format('DD-MM-YYYY')}</TableCell> */}
-                                    {/* <TableCell>{moment.unix(Number(appointment.datum)).format('HH:mm')}</TableCell> */}
-                                    {/* <TableCell>{appointment.arzt}</TableCell> */}
-                                    <TableCell>
-                                        <Button onClick={e => handleClickOpen(appointment.id)}>
-                                            <CreateIcon />
-                                        </Button>
-                                    </TableCell>
-                                    <TableCell>
-                                        <Button>
-                                            <DeleteIcon />
-                                        </Button>
-                                    </TableCell>
-                                </TableRow>
-                            );
-                        })}
-                    </TableBody>
+
+                    {!!appointments.length && !!patients.length && (
+                        <TableBody>
+                            {appointments.map((appointment, index) => {
+                                const patient: Patient = patients.find(element => Number(appointment.patient) === element.id);
+
+                                return (
+                                    <TableRow hover key={appointment.id}>
+                                        <TableCell>{index + 1}</TableCell>
+                                        <TableCell>{patient.firstname}</TableCell>
+                                        <TableCell>{patient.lastname}</TableCell>
+                                        <TableCell>{patient.insurance}</TableCell>
+                                        <TableCell>{appointment.vaccine_dose}</TableCell>
+                                        <TableCell>{moment.utc(appointment.date).format('DD-MM-YYYY')}</TableCell>
+                                        <TableCell>{moment.utc(appointment.date).format('HH:mm')}</TableCell>
+                                        <TableCell>
+                                            <Button onClick={e => handleClickOpen(appointment.id)}>
+                                                <CreateIcon />
+                                            </Button>
+                                        </TableCell>
+                                        <TableCell>
+                                            <Button onClick={e => deleteHandler(appointment.id)}>
+                                                <DeleteIcon />
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    )}
                 </Table>
             </TableContainer>
 
             {selectedId && (
                 <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
-                    {/* TODO: Edit Termin Dialog */}
-                    <DialogContent>{/* <EditUser id={selectedId} /> */}</DialogContent>
+                    <DialogContent>
+                        <EditAppointment id={selectedId} />
+                    </DialogContent>
                 </Dialog>
             )}
         </Box>

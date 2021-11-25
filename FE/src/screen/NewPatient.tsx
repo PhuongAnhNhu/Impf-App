@@ -9,15 +9,15 @@ import { useHistory } from "react-router";
 import { postPatient } from "../reducers/patients";
 
 const NewPatient = () => {
-    const [firstname, setFirstname] = useState("");
-    const [lastname, setLastName] = useState("");
-    const [insurance, setInsurance] = useState("");
-    const [kkv, setKkv] = useState("");
-    const [gender, setGender] = useState("");
+    const [firstname, setFirstname] = useState<string>('');
+    const [lastname, setLastName] = useState<string>('');
+    const [insurance, setInsurance] = useState<string>('');
+    const [kkv, setKkv] = useState<string>('');
+    const [gender, setGender] = useState<string>('');
     const [date, setDate] = useState(new Date());
-    const [address, setAddress] = useState("");
-    const [zip, setZip] = useState("");
-    const [city, setCity] = useState("");
+    const [address, setAddress] = useState<string>('');
+    const [zip, setZip] = useState<string>('');
+    const [city, setCity] = useState<string>('');
 
     const genderOption = ["male", "female", "diverse"];
 

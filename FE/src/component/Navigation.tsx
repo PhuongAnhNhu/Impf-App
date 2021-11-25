@@ -2,12 +2,13 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import DropDown from './DropDown';
 import { AppBar, Toolbar, Box, Button, MenuItem } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { logout, getProfile } from '../reducers/profile';
 import { RootState } from '../store';
 
 const Navigation = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const logoutHandler = () => {
         dispatch(logout());
@@ -21,6 +22,7 @@ const Navigation = () => {
     }, []);
 
     if (!isLoggedIn) {
+        history.push('/login');
         return <></>;
     }
 

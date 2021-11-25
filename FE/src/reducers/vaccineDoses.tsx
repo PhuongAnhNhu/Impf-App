@@ -3,11 +3,23 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash';
 import moment from 'moment';
 
-const initialState: VaccineDosesState = { vaccineDoses: [], loading: false };
+const initialState: VaccineDosesState = { vaccineDoses: [], vaccineDosesAssigned: [], vaccineDosesNotAssigned: [], loading: false };
 
 //GET vaccindoses
 export const getVaccineDoses = createAsyncThunk('vaccineDoses/getVaccineDoses', async () => {
     const response = await axios.get('/api/vaccine_doses');
+    return response.data.collection;
+});
+
+//GET vaccindosesAssigned
+export const getVaccindosesAssigned = createAsyncThunk('vaccineDoses/getVaccindosesAssigned', async () => {
+    const response = await axios.get('/api/vaccine_doses?assigned=true');
+    return response.data.collection;
+});
+
+//GET vaccindosesNotAssigned
+export const getVaccindosesNotAssigned = createAsyncThunk('vaccineDoses/getVaccindosesNotAssigned', async () => {
+    const response = await axios.get('/api/vaccine_doses?assigned=false');
     return response.data.collection;
 });
 
@@ -52,6 +64,48 @@ export const vaccineDosesSlice = createSlice({
             };
         },
         [getVaccineDoses.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //getvaccindosesAssigned
+        [getVaccindosesAssigned.fulfilled.type]: (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                vaccineDosesAssigned: action.payload,
+            };
+        },
+        [getVaccindosesAssigned.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [getVaccindosesAssigned.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //getvaccindosesNotAssigned
+        [getVaccindosesNotAssigned.fulfilled.type]: (state, action) => {
+            return {
+                ...state,
+                loading: false,
+                vaccineDosesNotAssigned: action.payload,
+            };
+        },
+        [getVaccindosesNotAssigned.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [getVaccindosesNotAssigned.pending.type]: state => {
             return {
                 ...state,
                 loading: true,
