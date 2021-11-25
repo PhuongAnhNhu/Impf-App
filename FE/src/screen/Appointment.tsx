@@ -59,7 +59,7 @@ const Appointment = () => {
         const patient = patients.find(e => e.insurance === insurance).id;
         const user = 1;
         dispatch(postAppointment({ date, vaccine_dose, patient, user }));
-        history.push('/appointments');
+        history.push('/listappointments');
     }, [value, vaccine, insurance]);
 
     useEffect(() => {
