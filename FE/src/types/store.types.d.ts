@@ -107,6 +107,10 @@ interface PostAppointmentPayload {
     user: number;
 }
 
+interface DeleteAppointmentPayload {
+    id:number;
+}
+
 //Vaccine Dose
 interface VaccineDose {
     id: number;

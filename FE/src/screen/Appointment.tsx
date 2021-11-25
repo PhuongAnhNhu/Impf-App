@@ -57,7 +57,6 @@ const Appointment = () => {
         const date = moment.utc(value).format('YYYY-MM-DD HH:mm:ss');
         const vaccine_dose = Number(vaccine);
         const patient = patients.find(e => e.insurance === insurance).id;
-        //TODO: get profile gibt kein user id zurück
         const user = 1;
         dispatch(postAppointment({ date, vaccine_dose, patient, user }));
         history.push('/appointments');

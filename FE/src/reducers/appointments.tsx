@@ -11,10 +11,17 @@ export const getAppointments = createAsyncThunk('appointments/getAppointments', 
     return response.data.collection;
 });
 
-//POST vaccindose
+//POST appointment
 export const postAppointment = createAsyncThunk('appointments/postAppointment', async (payload: PostAppointmentPayload, thunkAPI) => {
     payload.date = moment.utc(payload.date).format('YYYY-MM-DD HH:mm:ss');
     const response = await axios.post(`/api/appointments`, payload);
+    thunkAPI.dispatch(getAppointments());
+    return response.data;
+});
+
+//DEL appointment
+export const deleteAppointment = createAsyncThunk('appointments/deleteAppointment', async (payload: DeleteAppointmentPayload, thunkAPI) => {
+    const response = await axios.delete(`/api/appointments/${payload.id}`);
     thunkAPI.dispatch(getAppointments());
     return response.data;
 });
@@ -58,6 +65,26 @@ export const appointmentsSlice = createSlice({
             };
         },
         [postAppointment.pending.type]: state => {
+            return {
+                ...state,
+                loading: true,
+            };
+        },
+
+        //deleteAppointment
+        [deleteAppointment.fulfilled.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [deleteAppointment.rejected.type]: state => {
+            return {
+                ...state,
+                loading: false,
+            };
+        },
+        [deleteAppointment.pending.type]: state => {
             return {
                 ...state,
                 loading: true,

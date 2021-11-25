@@ -3,7 +3,7 @@ import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, Tabl
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAppointments } from '../reducers/appointments';
+import { deleteAppointment, getAppointments } from '../reducers/appointments';
 import { RootState } from '../store';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
@@ -25,6 +25,10 @@ const ListAppointment = () => {
     const handleClose = () => {
         setSelectedId(null);
     };
+
+    const deleteHandler = (id: number) => {
+        dispatch(deleteAppointment({id}));
+    }
 
     useEffect(() => {
         dispatch(getAppointments());
@@ -74,7 +78,7 @@ const ListAppointment = () => {
                                             </Button>
                                         </TableCell>
                                         <TableCell>
-                                            <Button>
+                                            <Button onClick={e => deleteHandler(appointment.id)}>
                                                 <DeleteIcon />
                                             </Button>
                                         </TableCell>
