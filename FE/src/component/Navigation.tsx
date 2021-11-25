@@ -44,20 +44,21 @@ const Navigation = () => {
                         <Button color="inherit">
                             <Link to="/newpatient">Neuer Patient</Link>
                         </Button>
-                        <Button color="inherit">
-                            <Link to="/listpatients">Patientsliste</Link>
-                        </Button>
 
                         <Button color="inherit">
                             <Link to="/listappointments">Terminliste</Link>
                         </Button>
+                        
                         <Button color="inherit">
-                            <Link to="/listimpfstoffe">Impfstoff</Link>
+                            <Link to="/listpatients">Patientsliste</Link>
+                        </Button>
+                        <Button color="inherit">
+                            <Link to="/listimpfstoffe">Impfstoffliste</Link>
                         </Button>
 
                         {profile.isAdmin && (
                             <Button color="inherit">
-                                <Link to="/listusers">Userlist</Link>
+                                <Link to="/listusers">Benutzliste</Link>
                             </Button>
                         )}
                     </Box>
