@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CreateIcon from '@mui/icons-material/Create';
 import moment from 'moment';
 import { getPatients } from '../reducers/patients';
+import EditAppointment from '../component/EditAppointment';
 
 const ListAppointment = () => {
     const dispatch = useDispatch();
@@ -27,8 +28,8 @@ const ListAppointment = () => {
     };
 
     const deleteHandler = (id: number) => {
-        dispatch(deleteAppointment({id}));
-    }
+        dispatch(deleteAppointment({ id }));
+    };
 
     useEffect(() => {
         dispatch(getAppointments());
@@ -52,6 +53,7 @@ const ListAppointment = () => {
                             <TableCell>Vorname</TableCell>
                             <TableCell>Nachname</TableCell>
                             <TableCell>Verischerungsnummer</TableCell>
+                            <TableCell>Vaccine</TableCell>
                             <TableCell>Datum</TableCell>
                             <TableCell>Uhrzeit</TableCell>
                             <TableCell>Bearbeiten</TableCell>
@@ -70,6 +72,7 @@ const ListAppointment = () => {
                                         <TableCell>{patient.firstname}</TableCell>
                                         <TableCell>{patient.lastname}</TableCell>
                                         <TableCell>{patient.insurance}</TableCell>
+                                        <TableCell>{appointment.vaccine_dose}</TableCell>
                                         <TableCell>{moment.utc(appointment.date).format('DD-MM-YYYY')}</TableCell>
                                         <TableCell>{moment.utc(appointment.date).format('HH:mm')}</TableCell>
                                         <TableCell>
@@ -92,8 +95,9 @@ const ListAppointment = () => {
 
             {selectedId && (
                 <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
-                    {/* TODO: Edit Termin Dialog */}
-                    <DialogContent>{/* <EditUser id={selectedId} /> */}</DialogContent>
+                    <DialogContent>
+                        <EditAppointment id={selectedId} />
+                    </DialogContent>
                 </Dialog>
             )}
         </Box>
