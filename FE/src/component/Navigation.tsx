@@ -31,34 +31,30 @@ const Navigation = () => {
             <AppBar color="inherit">
                 <Toolbar>
                     <Box sx={{ flexGrow: 1 }}>
-                        <Button color="inherit">
-                            <Link to="/">
-                                <img src="/logo.png" width="50" alt="logo"></img>
-                            </Link>
+                        <Button component={Link} to="/" color="inherit">
+                            <img src="/logo.png" width="50" alt="logo"></img>
                         </Button>
-                        <Button color="inherit">
-                            <Link style={{ textDecoration: 'none' }} to="/appointment">
-                                Neuer Termin
-                            </Link>
+                        <Button component={Link} to="/appointment" color="inherit">
+                            Neuer Termin
                         </Button>
-                        <Button color="inherit">
-                            <Link to="/newpatient">Neuer Patient</Link>
+                        <Button component={Link} to="/newpatient" color="inherit">
+                            Neuer Patient
                         </Button>
 
-                        <Button color="inherit">
-                            <Link to="/listappointments">Terminliste</Link>
+                        <Button component={Link} to="/listappointments" color="inherit">
+                            Terminliste
                         </Button>
-                        
-                        <Button color="inherit">
-                            <Link to="/listpatients">Patientsliste</Link>
+
+                        <Button component={Link} to="/listpatients" color="inherit">
+                            Patientsliste
                         </Button>
-                        <Button color="inherit">
-                            <Link to="/listimpfstoffe">Impfstoffliste</Link>
+                        <Button component={Link} to="/listimpfstoffe" color="inherit">
+                            Impfstoffliste
                         </Button>
 
                         {profile.isAdmin && (
-                            <Button color="inherit">
-                                <Link to="/listusers">Benutzliste</Link>
+                            <Button component={Link} to="/listusers" color="inherit">
+                                Benutzliste
                             </Button>
                         )}
                     </Box>

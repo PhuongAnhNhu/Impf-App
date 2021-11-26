@@ -32,8 +32,8 @@ const EditAppointment = ({ id }: EditAppointmentProps) => {
     const patientCurrent = patients.find(element => element.id === Number(appointment.patient));
 
     const [dateAppointment, setDateAppointment] = React.useState<Date | null>(appointment.date);
-    const [vaccine, setVaccine] = useState<number|null>(Number(appointment.vaccine_dose));
-    const [vaccineType, setVaccineType] = useState<string|null>('');
+    const [vaccine, setVaccine] = useState<number | null>(Number(appointment.vaccine_dose));
+    const [vaccineType, setVaccineType] = useState<string | null>('');
 
     const vaccines: Vaccine[] = useSelector((state: RootState) => state.vaccinesState.vaccines);
     const vaccinesTypeOptions = vaccines.map(item => item.name);
@@ -49,8 +49,7 @@ const EditAppointment = ({ id }: EditAppointmentProps) => {
         //Find vaccine hersteller
         const vaccinesFilterID = vaccines.find(e => e.name === vaccineType);
         //Find alle Vaccine Dose von dieser Hersteller
-        console.log(vaccinesFilterID);
-        const vaccineListNachVaccineType = vaccineDosesNachDatum.filter(e => e.vaccine === (vaccinesFilterID?.id || 0) );
+        const vaccineListNachVaccineType = vaccineDosesNachDatum.filter(e => e.vaccine === (vaccinesFilterID?.id || 0));
         vaccineDosesList = vaccineListNachVaccineType.map(item => String(item.id));
     }
 
@@ -70,9 +69,9 @@ const EditAppointment = ({ id }: EditAppointmentProps) => {
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
-            {!appointments.length && !patients.length && !vaccines.length ? (
-                <CircularProgress size={40} />
-            ) : (
+            {!appointments.length && !patients.length && !vaccines.length && <CircularProgress size={40} />}
+
+            {!!appointments.length && !!patients.length && !!vaccines.length && (
                 <Box>
                     <FormControl fullWidth>
                         <h3>

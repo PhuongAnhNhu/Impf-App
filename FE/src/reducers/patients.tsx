@@ -54,7 +54,7 @@ export const patientsSlice = createSlice({
         [getPatients.rejected.type]: state => {
             return {
                 ...state,
-                loading: true,
+                loading: false,
             };
         },
         [getPatients.pending.type]: state => {

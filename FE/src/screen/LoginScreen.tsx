@@ -31,9 +31,8 @@ const LoginScreen = () => {
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 {loading && <CircularProgress size={100}/>}
                 {!isLoggedIn && (
-                        <Box>
-                            <img src="/logo.png" width="100" alt="logo"></img>
-                            <h2>Impf-App</h2>
+                        <Box mb={3}>
+                            <img src="/artz.png" width="300" alt="logo"></img>
                         </Box>
                 )}
                 </Box>

@@ -69,77 +69,84 @@ const Appointment = () => {
     }, []);
 
     return (
-        <Box mt={10} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+        <Box mt={10}>
+            <Box sx={{ position: 'absolute' }}>
+                <img src="/krankschwester.png" width="100" alt="logo"></img>
+            </Box>
             {!patients.length && !vaccines.length ? (
                 <CircularProgress size={40} />
             ) : (
-                <Box sx={{ width: '75%' }}>
-                    <FormControl fullWidth>
-                        <FormLabel component="legend">Appointment</FormLabel>
-                        <FormControl margin="dense">
-                            <Autocomplete
-                                disableCloseOnSelect={false}
-                                value={insurance}
-                                options={patientInsurance}
-                                onChange={(e, newValue) => {
-                                    setInsurance(newValue);
-                                    setFirstname(patients.find(item => newValue === item.insurance)?.firstname || '');
-                                    setLastname(patients.find(item => newValue === item.insurance)?.lastname || '');
-                                }}
-                                renderInput={params => <TextField {...params} label="Versicherungsnummer" required variant="standard" />}
-                            />
-                        </FormControl>
-
-                        <FormControl margin="dense">
-                            <TextField required variant="standard" label="Vorname" value={firstname} />
-                        </FormControl>
-
-                        <FormControl margin="dense">
-                            <TextField required variant="standard" label="Nachname" value={lastname} />
-                        </FormControl>
-
-                        <FormControl margin="dense">
-                            <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap['de']}>
-                                <DesktopDateTimePicker
-                                    mask={maskMap['de']}
-                                    label="Uhrzeit"
-                                    value={value}
-                                    onChange={newValue => {
-                                        setValue(newValue);
+                <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                    <Box sx={{ width: '70%' }}>
+                        <FormControl fullWidth>
+                            <FormLabel component="legend">Appointment</FormLabel>
+                            <FormControl margin="dense">
+                                <Autocomplete
+                                    disableCloseOnSelect={false}
+                                    value={insurance}
+                                    options={patientInsurance}
+                                    onChange={(e, newValue) => {
+                                        setInsurance(newValue);
+                                        setFirstname(patients.find(item => newValue === item.insurance)?.firstname || '');
+                                        setLastname(patients.find(item => newValue === item.insurance)?.lastname || '');
                                     }}
-                                    renderInput={params => <TextField {...params} />}
+                                    renderInput={params => (
+                                        <TextField {...params} label="Versicherungsnummer" required variant="standard" />
+                                    )}
                                 />
-                            </LocalizationProvider>
-                        </FormControl>
+                            </FormControl>
 
-                        <FormControl margin="dense">
-                            <Autocomplete
-                                autoHighlight={true}
-                                disableCloseOnSelect={false}
-                                value={vaccineType}
-                                options={vaccinesTypeOptions}
-                                onChange={(e, newValue) => {
-                                    setVaccineType(newValue);
-                                }}
-                                renderInput={params => <TextField {...params} label="Hersteller" required variant="standard" />}
-                            />
-                        </FormControl>
+                            <FormControl margin="dense">
+                                <TextField required variant="standard" label="Vorname" value={firstname} />
+                            </FormControl>
 
-                        <FormControl margin="dense">
-                            <Autocomplete
-                                disableCloseOnSelect={false}
-                                value={vaccine}
-                                options={vaccineDosesList}
-                                onChange={(e, newValue) => {
-                                    setVaccine(newValue);
-                                }}
-                                renderInput={params => <TextField {...params} label="Impfstoff" required variant="standard" />}
-                            />
+                            <FormControl margin="dense">
+                                <TextField required variant="standard" label="Nachname" value={lastname} />
+                            </FormControl>
+
+                            <FormControl margin="dense">
+                                <LocalizationProvider dateAdapter={AdapterDateFns} locale={localeMap['de']}>
+                                    <DesktopDateTimePicker
+                                        mask={maskMap['de']}
+                                        label="Uhrzeit"
+                                        value={value}
+                                        onChange={newValue => {
+                                            setValue(newValue);
+                                        }}
+                                        renderInput={params => <TextField {...params} />}
+                                    />
+                                </LocalizationProvider>
+                            </FormControl>
+
+                            <FormControl margin="dense">
+                                <Autocomplete
+                                    autoHighlight={true}
+                                    disableCloseOnSelect={false}
+                                    value={vaccineType}
+                                    options={vaccinesTypeOptions}
+                                    onChange={(e, newValue) => {
+                                        setVaccineType(newValue);
+                                    }}
+                                    renderInput={params => <TextField {...params} label="Hersteller" required variant="standard" />}
+                                />
+                            </FormControl>
+
+                            <FormControl margin="dense">
+                                <Autocomplete
+                                    disableCloseOnSelect={false}
+                                    value={vaccine}
+                                    options={vaccineDosesList}
+                                    onChange={(e, newValue) => {
+                                        setVaccine(newValue);
+                                    }}
+                                    renderInput={params => <TextField {...params} label="Impfstoff" required variant="standard" />}
+                                />
+                            </FormControl>
+                            <Button onClick={onSubmit} sx={{ marginTop: '2rem' }} variant="outlined">
+                                Speichern
+                            </Button>
                         </FormControl>
-                        <Button onClick={onSubmit} sx={{ marginTop: '2rem' }} variant="outlined">
-                            Speichern
-                        </Button>
-                    </FormControl>
+                    </Box>
                 </Box>
             )}
         </Box>

@@ -1,56 +1,28 @@
 import React from 'react';
-import appointments from '../dummydata/appointments';
-import moment from 'moment';
-import {
-    Box,
-    Checkbox,
-    Table,
-    Paper,
-    TableRow,
-    TableHead,
-    TableContainer,
-    TableCell,
-    TableBody,
-    Card,
-    CardActionArea,
-    CardMedia,
-    CardContent,
-    Typography,
-    CardActions,
-    Button,
-} from '@mui/material';
+import { Box, Card, CardActionArea, CardMedia, CardContent, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 const HomeScreen = () => {
-    let today = moment.unix(Date.now() / 1000).format('DD-MM-YYYY');
-
-    let data = appointments.map((appointment, index) => {
-        // Anzeige nur Termin für heute
-        return (
-            today === moment.unix(Number(appointment.datum)).format('DD-MM-YYYY') && (
-                <TableRow key={appointment.impfterminId}>
-                    {/* TODO: index */}
-                    <TableCell>
-                        <Checkbox></Checkbox>
-                    </TableCell>
-                    <TableCell>{appointment.nachname}</TableCell>
-                    <TableCell>{appointment.vorname}</TableCell>
-                    <TableCell>{appointment.versicherungsnummer}</TableCell>
-                    <TableCell>{moment.unix(Number(appointment.datum)).format('DD-MM-YYYY')}</TableCell>
-                    <TableCell>{moment.unix(Number(appointment.datum)).format('HH:mm')}</TableCell>
-                    <TableCell>{appointment.arzt}</TableCell>
-                </TableRow>
-            )
-        );
-    });
-
     return (
-        <Box mr={2} mt={22}>
+        <Box mr={2} mt={12}>
             <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ width: 550, height: 300 }}>
+                    <Link to="/appointment">
+                        <CardActionArea>
+                            <CardMedia component="img" height="220" image="/termin.jpeg" alt="Paella dish"></CardMedia>
+                            <CardContent>
+                                <Typography gutterBottom variant="h5" component="div">
+                                    Neuer Termin
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
+                    </Link>
+                </Card>
+
+                <Card sx={{ width: 550, height: 300 }}>
                     <Link to="/listappointments">
                         <CardActionArea>
-                            <CardMedia component="img" height="350"  image="/calendar.png" alt="green iguana" />
+                            <CardMedia component="img" height="220" image="/arbeitplatz.jpeg" alt="green iguana" />
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     Termin
@@ -59,10 +31,12 @@ const HomeScreen = () => {
                         </CardActionArea>
                     </Link>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
+            </Box>
+            <Box mt={4} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-around' }}>
+                <Card sx={{ width: 550, height: 300 }}>
                     <Link to="/listpatients">
                         <CardActionArea>
-                            <CardMedia component="img" height="350"   image="/people.png" alt="green iguana" />
+                            <CardMedia component="img" height="220" image="/patient.jpeg" alt="green iguana" />
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     Patient
@@ -71,10 +45,10 @@ const HomeScreen = () => {
                         </CardActionArea>
                     </Link>
                 </Card>
-                <Card sx={{ maxWidth: 345 }}>
-                    <Link to="/listappointments">
+                <Card sx={{ width: 550, height: 300 }}>
+                    <Link to="/listimpfstoffe">
                         <CardActionArea>
-                            <CardMedia component="img" height="350"  image="/vaccines.png" alt="green iguana" />
+                            <CardMedia component="img" height="220" image="/vaccines.jpeg" alt="green iguana" />
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
                                     Impfstoff
