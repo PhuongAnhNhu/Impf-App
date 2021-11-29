@@ -50,11 +50,10 @@ const ListImpfstoffe = () => {
     return (
         <Box mr={2} mt={10}>
             <h2>Impfstoffe</h2>
-            <Link to="/impfstoff">
-                <Button sx={{ marginBottom: '1rem' }} variant="outlined">
-                    <AddIcon /> Impfstoffe eintragen
-                </Button>
-            </Link>
+
+            <Button component={Link} to="/impfstoff" sx={{ marginBottom: '1rem' }} variant="outlined">
+                <AddIcon /> Impfstoffe eintragen
+            </Button>
 
             {loading && <CircularProgress size={40} />}
 

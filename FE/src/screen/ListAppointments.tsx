@@ -1,5 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Table, Paper, TableRow, TableHead, TableContainer, TableCell, TableBody, Button, Dialog, DialogContent } from '@mui/material';
+import {
+    Box,
+    Table,
+    Paper,
+    TableRow,
+    TableHead,
+    TableContainer,
+    TableCell,
+    TableBody,
+    Button,
+    Dialog,
+    DialogContent,
+    CircularProgress,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,70 +50,72 @@ const ListAppointment = () => {
     }, []);
 
     return (
-        <Box mr={2} mt={10}>
-            <h2>Terminliste</h2>
-            <Link to="/appointment">
-                <Button sx={{ marginBottom: '2rem' }} variant="outlined">
+        <>
+            {!appointments.length && !patients.length && <CircularProgress size={40} />}
+            <Box mr={2} mt={10}>
+                <h2>Terminliste</h2>
+                <Button component={Link} to="/appointment" sx={{ marginBottom: '2rem' }} variant="outlined">
                     <AddIcon />
                     Neuer Termin
                 </Button>
-            </Link>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>ID</TableCell>
-                            <TableCell>Vorname</TableCell>
-                            <TableCell>Nachname</TableCell>
-                            <TableCell>Verischerungsnummer</TableCell>
-                            <TableCell>Vaccine</TableCell>
-                            <TableCell>Datum</TableCell>
-                            <TableCell>Uhrzeit</TableCell>
-                            <TableCell>Bearbeiten</TableCell>
-                            <TableCell>Löschen</TableCell>
-                        </TableRow>
-                    </TableHead>
 
-                    {!!appointments.length && !!patients.length && (
-                        <TableBody>
-                            {appointments.map((appointment, index) => {
-                                const patient: Patient = patients.find(element => Number(appointment.patient) === element.id);
+                <TableContainer component={Paper}>
+                    <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>ID</TableCell>
+                                <TableCell>Vorname</TableCell>
+                                <TableCell>Nachname</TableCell>
+                                <TableCell>Verischerungsnummer</TableCell>
+                                <TableCell>Vaccine</TableCell>
+                                <TableCell>Datum</TableCell>
+                                <TableCell>Uhrzeit</TableCell>
+                                <TableCell>Bearbeiten</TableCell>
+                                <TableCell>Löschen</TableCell>
+                            </TableRow>
+                        </TableHead>
 
-                                return (
-                                    <TableRow hover key={appointment.id}>
-                                        <TableCell>{index + 1}</TableCell>
-                                        <TableCell>{patient.firstname}</TableCell>
-                                        <TableCell>{patient.lastname}</TableCell>
-                                        <TableCell>{patient.insurance}</TableCell>
-                                        <TableCell>{appointment.vaccine_dose}</TableCell>
-                                        <TableCell>{moment.utc(appointment.date).format('DD-MM-YYYY')}</TableCell>
-                                        <TableCell>{moment.utc(appointment.date).format('HH:mm')}</TableCell>
-                                        <TableCell>
-                                            <Button onClick={e => handleClickOpen(appointment.id)}>
-                                                <CreateIcon />
-                                            </Button>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Button onClick={e => deleteHandler(appointment.id)}>
-                                                <DeleteIcon />
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    )}
-                </Table>
-            </TableContainer>
+                        {!!appointments.length && !!patients.length && (
+                            <TableBody>
+                                {appointments.map((appointment, index) => {
+                                    const patient: Patient = patients.find(element => Number(appointment.patient) === element.id);
 
-            {selectedId && (
-                <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
-                    <DialogContent>
-                        <EditAppointment id={selectedId} />
-                    </DialogContent>
-                </Dialog>
-            )}
-        </Box>
+                                    return (
+                                        <TableRow hover key={appointment.id}>
+                                            <TableCell>{index + 1}</TableCell>
+                                            <TableCell>{patient.firstname}</TableCell>
+                                            <TableCell>{patient.lastname}</TableCell>
+                                            <TableCell>{patient.insurance}</TableCell>
+                                            <TableCell>{appointment.vaccine_dose}</TableCell>
+                                            <TableCell>{moment.utc(appointment.date).format('DD-MM-YYYY')}</TableCell>
+                                            <TableCell>{moment.utc(appointment.date).format('HH:mm')}</TableCell>
+                                            <TableCell>
+                                                <Button onClick={e => handleClickOpen(appointment.id)}>
+                                                    <CreateIcon />
+                                                </Button>
+                                            </TableCell>
+                                            <TableCell>
+                                                <Button onClick={e => deleteHandler(appointment.id)}>
+                                                    <DeleteIcon />
+                                                </Button>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        )}
+                    </Table>
+                </TableContainer>
+
+                {selectedId && (
+                    <Dialog open={Boolean(selectedId)} onClose={handleClose} fullWidth>
+                        <DialogContent>
+                            <EditAppointment id={selectedId} />
+                        </DialogContent>
+                    </Dialog>
+                )}
+            </Box>
+        </>
     );
 };
 

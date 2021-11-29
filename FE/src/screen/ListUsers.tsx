@@ -24,7 +24,7 @@ import EditUser from '../component/EditUser';
 
 const ListUsers = () => {
     const dispatch = useDispatch();
-   
+
     const usersState = useSelector((state: RootState) => state.usersState);
     const { users, loading } = usersState;
 
@@ -46,17 +46,13 @@ const ListUsers = () => {
         dispatch(getUserList());
     }, []);
 
-  
-
     return (
         <Box mr={2} mt={14}>
             <h2>Userliste</h2>
-            <Link to="/newuser">
-                <Button sx={{ marginBottom: '2rem' }} variant="outlined">
-                    <AddIcon />
-                    Neuer User
-                </Button>
-            </Link>
+            <Button component={Link} to="/newuser" sx={{ marginBottom: '2rem' }} variant="outlined">
+                <AddIcon />
+                Neuer User
+            </Button>
             {loading && <CircularProgress size={40} />}
             {users && (
                 <TableContainer component={Paper}>
